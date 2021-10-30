@@ -17,7 +17,7 @@ export default function Home() {
     const connection = await web3Modal.connect()
     const provider = new ethers.providers.Web3Provider(connection)
     const signer = provider.getSigner()
-    const signed = await signer.signMessage("Test sign")
+    const signed = await signer.signMessage("Sign message to login")
     if (signed) {
       console.log("signed")
     }
