@@ -17,6 +17,8 @@ export default function Home() {
       router.push("/discover");
       }
   }, [signed]);
+
+  
   console.log(signed)
   return (
     <>
