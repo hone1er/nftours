@@ -6,6 +6,7 @@
     "node": "14.x"
   },
   "scripts": {
+    "prestart": "next build",
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p $PORT",
