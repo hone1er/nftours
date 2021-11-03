@@ -5,31 +5,44 @@ import { login } from "../scripts/login";
 import dynamic from "next/dynamic";
 import { mintNFT } from "../scripts/mint-nft";
 import { NFTlinks } from "../scripts/NFTlinks";
-import axios from "axios";
+import Image from "next/image";
 import { getDistanceFromLatLonInKm } from "../scripts/distanceFormula";
 
 export default function Discover() {
   const { signed, setSigned } = useContext(AppContext);
   const [locations, setLocations] = useState([]);
-  console.log("signed: ", signed);
-  async function handleLogin() {
-    setSigned(await login());
-  }
-
-  const MapWithNoSSR = dynamic(() => import("../components/Map.tsx"), {
-    ssr: false,
-  });
-
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
   const [status, setStatus] = useState(null);
   const [distance, setDistance] = useState(null);
   
   
+  console.log("signed: ", signed);
+  
+  const MapWithNoSSR = dynamic(() => import("../components/Map.tsx"), {
+    ssr: false,
+  });
+  
+  async function handleLogin() {
+    setSigned(await login());
+  }
+  
   function handleMint(tokenURI) {
     console.log("minting: ", tokenURI);
     console.log(distance, distance < 3);
+    mintNFT(tokenURI);
   }
+
+  useEffect(() => {
+    setLocations(NFTlinks);
+  }, []);
+
+  useEffect(() => {
+    const dist = getDistanceFromLatLonInKm(lat, lng, 38.0171441, -122.2885808);
+    setDistance(dist);
+    console.log("dist: ", distance);
+  }, [lng, lat]);
+
 
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -49,45 +62,41 @@ export default function Discover() {
     }
   };
 
-  useEffect(() => {
 
-      setLocations(NFTlinks);
-  }, []);
-
-  useEffect(() => {
-    
-    const dist = getDistanceFromLatLonInKm(lat, lng, 38.0171441, -122.2885808);
-    setDistance(dist);
-    console.log("dist: ", distance);
-  }, [lng, lat]);
+  const myLoader = ({ src, width, quality }) => {
+    return `${src}?w=${width}&q=${quality || 75}`;
+  };
 
   let locationDiv = locations.map((obj) => {
     return (
       <>
-      <div className="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center">
-        <div className="mb-8">
-          <img
-            className="object-center object-cover rounded-full h-36 w-36"
-            src={obj.image}
-            alt="photo"
-          />
+        <div className="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center">
+          <div className="mb-8">
+            <Image
+              className="object-center object-cover rounded-full h-36 w-36"
+              loader={myLoader}
+              src={obj.image}
+              alt="Picture of the author"
+              width={500}
+              height={500}
+            />
+          </div>
+          <div className="text-center">
+            <p className="text-xl text-white font-bold mb-2">{obj.name}</p>
+            <p className="text-base text-gray-400 font-normal">
+              {obj.description}
+            </p>
+          </div>
+          <br />
+          <button
+            className={
+              "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            }
+            onClick={() => handleMint(obj.tokenURI)}
+          >
+            Mint NFT
+          </button>
         </div>
-        <div className="text-center">
-          <p className="text-xl text-white font-bold mb-2">{obj.name}</p>
-          <p className="text-base text-gray-400 font-normal">
-            {obj.description}
-          </p>
-        </div>
-        <br/>
-        <button
-        className={
-          "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-        }
-        onClick={() => handleMint(obj.tokenURI)}
-      >
-        Mint NFT
-      </button>
-      </div>
       </>
     );
   });
@@ -100,7 +109,7 @@ export default function Discover() {
       >
         Get Coordinates
       </button>
-      
+
       <h1>Coordinates</h1>
       <p>{status}</p>
       {lat && <p>Latitude: {lat}</p>}
