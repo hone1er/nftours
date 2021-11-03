@@ -1,6 +1,6 @@
 export const NFTlinks = [
   {
-    city: "hercules",
+    city: "Hercules",
     country: "United States",
     location: [38.0171441, -122.2885808],
     tokenURI:
@@ -11,11 +11,12 @@ export const NFTlinks = [
     name: "Check",
   },
   {
+    city: "Madrid",
     country: "Spain",
     location: [40.416775, -3.703790],
     tokenURI:
       "https://gateway.pinata.cloud/ipfs/QmZ9iYtaswfhWkCA7FwaUmhqtCLH9zWu22QDnrUKusznhU",
-    description: "Mi novia",
+    description: "Madrid, Spain",
     image:
       "https://gateway.pinata.cloud/ipfs/QmTAgXrFsMMonZiyHsah9KpV3bJqvjasWQrRjNGamEMp1A",
     name: "Lore",
