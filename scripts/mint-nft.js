@@ -28,8 +28,9 @@ export async function mintNFT(tokenURI) {
     data: nftContract.methods.mintNFT(pubKey, tokenURI).encodeABI(),
   }
 
-  const signPromise = await signer.sendTransaction(tx)
-  const hash = await signPromise.hash
-  console.log(hash)
+  const signPromise = await signer.sendTransaction(tx);
+  const tokeID = await signPromise.data;
+  const hash = await signPromise.hash;
+  console.log(hash, "tokeID: ", tokeID);
   alert("Your tx hash is: ", hash)
 }
