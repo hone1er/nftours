@@ -7,18 +7,16 @@ import { NFTlinks } from '../scripts/NFTlinks';
 const Map = () => {
   
   
-  let markers = NFTlinks.map((obj)=> {
+  let markers = NFTlinks.map((obj, idx)=> {
     console.log(obj);
     
     return (
-    <>
-    <Marker position={obj.location}>
+    <Marker key={idx} position={obj.location}>
     <Popup>
       {obj.description}
       <img src={obj.image} alt="" />
     </Popup>
     </Marker>
-    </>
     )
   })
   return (

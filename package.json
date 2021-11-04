@@ -12,11 +12,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@3id/connect": "^0.2.5",
     "@alch/alchemy-web3": "^1.1.7",
+    "@ceramicnetwork/3id-did-resolver": "^1.4.7",
+    "@ceramicnetwork/http-client": "^1.4.3",
+    "@ceramicstudio/idx": "^0.12.2",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@openzeppelin/contracts": "^4.3.2",
     "axios": "^0.24.0",
     "chai": "^4.3.4",
+    "dids": "^2.4.0",
     "dotenv": "^10.0.0",
     "ethereum-waffle": "^3.4.0",
     "hardhat": "^2.6.7",

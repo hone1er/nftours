@@ -7,9 +7,10 @@ import { mintNFT } from "../scripts/mint-nft";
 import { NFTlinks } from "../scripts/NFTlinks";
 import Image from "next/image";
 import { getDistanceFromLatLonInKm } from "../scripts/distanceFormula";
+import { myLoader, readProfile } from "../scripts/profileHelpers";
 
 export default function Discover() {
-  const { signed, setSigned } = useContext(AppContext);
+  const { signed, setSigned, setName, setImage } = useContext(AppContext);
   const [locations, setLocations] = useState([]);
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
@@ -24,7 +25,11 @@ export default function Discover() {
   });
   
   async function handleLogin() {
-    setSigned(await login());
+    const data = await readProfile()
+    console.log("data: ", data);
+    if (data.name) setName(data.name);
+    if (data.avatar) setImage(data.avatar);
+    setSigned(data ? true : false);
   }
   
   function handleMint(tokenURI) {
@@ -63,14 +68,10 @@ export default function Discover() {
   };
 
 
-  const myLoader = ({ src, width, quality }) => {
-    return `${src}?w=${width}&q=${quality || 75}`;
-  };
 
-  let locationDiv = locations.map((obj) => {
+  let locationDiv = locations.map((obj, idx) => {
     return (
-      <>
-        <div className="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center">
+        <div key={idx} className="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center">
           <div className="mb-8">
             <Image
               className="object-center object-cover rounded-full h-36 w-36"
@@ -97,7 +98,6 @@ export default function Discover() {
             Mint NFT
           </button>
         </div>
-      </>
     );
   });
   let page = signed ? (

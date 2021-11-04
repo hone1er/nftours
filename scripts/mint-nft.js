@@ -32,5 +32,4 @@ export async function mintNFT(tokenURI) {
   const tokeID = await signPromise.data;
   const hash = await signPromise.hash;
   console.log(hash, "tokeID: ", tokeID);
-  alert("Your tx hash is: ", hash)
 }
