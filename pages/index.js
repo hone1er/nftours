@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import AppContext from "../AppContext";
 import router from "next/router";
 import { readProfile, updateProfile } from "../scripts/profileHelpers";
+import { login } from "../scripts/login";
 
 export default function Home() {
   const { signed, setSigned, name, setName, image, setImage } = useContext(AppContext);
@@ -19,10 +20,14 @@ export default function Home() {
     console.log("data: ", data);
     if (data.name) setName(data.name);
     if (data.avatar) setImage(data.avatar);
+    const loggedIn = await login()
+    if (loggedIn){
     setSigned(data ? true : false)
+    }
   }
 
   useEffect(() => {
+    
     if (signed) {
       router.push("/discover");
     }
