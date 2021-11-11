@@ -70,6 +70,8 @@ export default function Discover() {
 
 
   let locationDiv = locations.map((obj, idx) => {
+    console.log(obj);
+    const distance = getDistanceFromLatLonInKm(obj.location[0], obj.location[1], lat, lng);
     return (
         <div key={idx} className="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center">
           <div className="mb-8">
@@ -87,16 +89,16 @@ export default function Discover() {
             <p className="text-base text-gray-400 font-normal">
               {obj.description}
             </p>
+            <p className="text-base text-gray-400 font-normal">{distance} km</p>
           </div>
           <br />
-          <button
-            className={
-              "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            }
+          {distance < 20 ? <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
             onClick={() => handleMint(obj.tokenURI)}
           >
             Mint NFT
           </button>
+          : <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full" disabled>Too Far</button>}
         </div>
     );
   });

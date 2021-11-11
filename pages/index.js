@@ -20,10 +20,8 @@ export default function Home() {
     console.log("data: ", data);
     if (data.name) setName(data.name);
     if (data.avatar) setImage(data.avatar);
-    const loggedIn = await login()
-    if (loggedIn){
+
     setSigned(data ? true : false)
-    }
   }
 
   useEffect(() => {
