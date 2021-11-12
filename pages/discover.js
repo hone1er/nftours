@@ -10,31 +10,24 @@ import { getDistanceFromLatLonInKm } from "../scripts/distanceFormula";
 import { myLoader, readProfile } from "../scripts/profileHelpers";
 
 export default function Discover() {
-  const { signed, setSigned, setName, setImage } = useContext(AppContext);
+  const { signed, setSigned, setName, setImage, latlng, setLatlng } =
+    useContext(AppContext);
   const [locations, setLocations] = useState([]);
-  const [lat, setLat] = useState(null);
-  const [lng, setLng] = useState(null);
   const [status, setStatus] = useState(null);
   const [distance, setDistance] = useState(null);
-  
-  
-  console.log("signed: ", signed);
-  
+
   const MapWithNoSSR = dynamic(() => import("../components/Map.tsx"), {
     ssr: false,
   });
-  
+
   async function handleLogin() {
-    const data = await readProfile()
-    console.log("data: ", data);
+    const data = await readProfile();
     if (data.name) setName(data.name);
     if (data.avatar) setImage(data.avatar);
     setSigned(data ? true : false);
   }
-  
+
   function handleMint(tokenURI) {
-    console.log("minting: ", tokenURI);
-    console.log(distance, distance < 3);
     mintNFT(tokenURI);
   }
 
@@ -43,11 +36,14 @@ export default function Discover() {
   }, []);
 
   useEffect(() => {
-    const dist = getDistanceFromLatLonInKm(lat, lng, 38.0171441, -122.2885808);
+    const dist = getDistanceFromLatLonInKm(
+      latlng[0],
+      latlng[1],
+      38.0171441,
+      -122.2885808
+    );
     setDistance(dist);
-    console.log("dist: ", distance);
-  }, [lng, lat]);
-
+  }, [latlng, distance]);
 
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -56,9 +52,9 @@ export default function Discover() {
       setStatus("Locating...");
       navigator.geolocation.getCurrentPosition(
         (position) => {
+          console.log([position.coords.latitude, position.coords.longitude]);
           setStatus(null);
-          setLat(position.coords.latitude);
-          setLng(position.coords.longitude);
+          setLatlng([position.coords.latitude, position.coords.longitude]);
         },
         () => {
           setStatus("Unable to retrieve your location");
@@ -67,39 +63,55 @@ export default function Discover() {
     }
   };
 
-
-
-  let locationDiv = locations.map((obj, idx) => {
-    console.log(obj);
-    const distance = getDistanceFromLatLonInKm(obj.location[0], obj.location[1], lat, lng);
+  const NFTcards = locations.map((obj, idx) => {
+    const distance = getDistanceFromLatLonInKm(
+      obj.location[0],
+      obj.location[1],
+      latlng[0],
+      latlng[1]
+    );
     return (
-        <div key={idx} className="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center">
-          <div className="mb-8">
-            <Image
-              className="object-center object-cover rounded-full h-36 w-36"
-              loader={myLoader}
-              src={obj.image}
-              alt="Picture of the author"
-              width={500}
-              height={500}
-            />
-          </div>
-          <div className="text-center">
-            <p className="text-xl text-white font-bold mb-2">{obj.name}</p>
-            <p className="text-base text-gray-400 font-normal">
-              {obj.description}
-            </p>
-            <p className="text-base text-gray-400 font-normal">{distance} km</p>
-          </div>
-          <br />
-          {distance < 20 ? <button
+      <div
+        key={idx}
+        className="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center"
+      >
+        <div className="mb-8">
+          <Image
+            className="object-center object-cover rounded-full h-36 w-36"
+            loader={myLoader}
+            src={obj.image}
+            alt="Picture of the author"
+            width={500}
+            height={500}
+            placeholder="blurDataURL"
+          />
+        </div>
+        <div className="text-center">
+          <p className="text-xl text-white font-bold mb-2">{obj.name}</p>
+          <p className="text-base text-gray-300 font-normal">
+            {obj.description}
+          </p>
+          <p className="text-base text-gray-500 font-normal">
+            {latlng.length > 0 ? distance + " km" : "check location"}
+          </p>
+        </div>
+        <br />
+        {distance < 0.75 ? (
+          <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
             onClick={() => handleMint(obj.tokenURI)}
           >
             Mint NFT
           </button>
-          : <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full" disabled>Too Far</button>}
-        </div>
+        ) : (
+          <button
+            className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full"
+            disabled
+          >
+            Too Far
+          </button>
+        )}
+      </div>
     );
   });
   let page = signed ? (
@@ -114,8 +126,8 @@ export default function Discover() {
 
       <h1>Coordinates</h1>
       <p>{status}</p>
-      {lat && <p>Latitude: {lat}</p>}
-      {lng && <p>Longitude: {lng}</p>}
+      {latlng[0] && <p>Latitude: {latlng[0]}</p>}
+      {latlng[1] && <p>Longitude: {latlng[1]}</p>}
       <div>
         <div className="w-full bg-gray-800">
           <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-4 py-12">
@@ -126,7 +138,7 @@ export default function Discover() {
               </h1>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {locationDiv}
+              {NFTcards}
             </div>
           </section>
         </div>

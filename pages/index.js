@@ -17,7 +17,6 @@ export default function Home() {
 
   async function handleLogin() {
     const data = await readProfile()
-    console.log("data: ", data);
     if (data.name) setName(data.name);
     if (data.avatar) setImage(data.avatar);
 
@@ -32,10 +31,7 @@ export default function Home() {
   }, [signed]);
 
 
-  
-  useEffect(() => {
-     console.log("name: ", name);
-  }, []);
+
 
   return (
     <>
@@ -79,3 +75,4 @@ export default function Home() {
     </>
   );
 }
+

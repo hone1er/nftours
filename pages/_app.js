@@ -9,6 +9,8 @@ export function MyApp({ Component, pageProps }) {
   const [signed, setSigned] = useState();
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
+  const [markers, setMarkers] = useState([]);
+  const [latlng, setLatlng] = useState([]);
   console.log(image);
   let img = image ? (
     <Image
@@ -58,6 +60,10 @@ export function MyApp({ Component, pageProps }) {
         setName,
         image,
         setImage,
+        markers,
+        setMarkers,
+        latlng,
+        setLatlng
       }}
     >
       <div>
