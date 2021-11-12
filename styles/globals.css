@@ -10,3 +10,16 @@
 .account-wrap {
   float: right;
 }
+
+.coordinate-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 75px auto;
+}
+
+.coordinate-wrap > button {
+  margin-bottom: 10px;
+}

@@ -15,6 +15,8 @@ export default function Discover() {
   const [locations, setLocations] = useState([]);
   const [status, setStatus] = useState(null);
   const [distance, setDistance] = useState(null);
+  const [closestCoord, setClosestCoord] = useState(null);
+  const [closetDist, setClosestDist] = useState(Infinity);
 
   const MapWithNoSSR = dynamic(() => import("../components/Map.tsx"), {
     ssr: false,
@@ -33,18 +35,25 @@ export default function Discover() {
 
   useEffect(() => {
     setLocations(NFTlinks);
-  }, []);
-
-  useEffect(() => {
-    const dist = getDistanceFromLatLonInKm(
-      latlng[0],
-      latlng[1],
-      38.0171441,
-      -122.2885808
-    );
-    setDistance(dist);
-  }, [latlng, distance]);
-
+    const getLocation = () => {
+      if (!navigator.geolocation) {
+        setStatus("Geolocation is not supported by your browser");
+      } else {
+        setStatus("Locating...");
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            console.log([position.coords.latitude, position.coords.longitude]);
+            setStatus(null);
+            setLatlng([position.coords.latitude, position.coords.longitude]);
+          },
+          () => {
+            setStatus("Unable to retrieve your location");
+          }
+        );
+      }
+    };
+    getLocation();
+  }, [setLatlng]);
   const getLocation = () => {
     if (!navigator.geolocation) {
       setStatus("Geolocation is not supported by your browser");
@@ -70,6 +79,10 @@ export default function Discover() {
       latlng[0],
       latlng[1]
     );
+    if (distance < closetDist) {
+      setClosestCoord([obj.location[0], obj.location[1]]);
+      setClosestDist(distance);
+    }
     return (
       <div
         key={idx}
@@ -96,7 +109,7 @@ export default function Discover() {
           </p>
         </div>
         <br />
-        {distance < 0.75 ? (
+        {distance < 3.5 ? (
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
             onClick={() => handleMint(obj.tokenURI)}
@@ -117,17 +130,28 @@ export default function Discover() {
   let page = signed ? (
     <>
       <MapWithNoSSR />
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-        onClick={getLocation}
-      >
-        Get Coordinates
-      </button>
+      <div className="coordinate-wrap">
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+          onClick={getLocation}
+        >
+          Update Location
+        </button>
 
-      <h1>Coordinates</h1>
-      <p>{status}</p>
-      {latlng[0] && <p>Latitude: {latlng[0]}</p>}
-      {latlng[1] && <p>Longitude: {latlng[1]}</p>}
+        <p>{status}</p>
+        {closestCoord && !status ? (
+          <p>
+            The closest NFT is{" "}
+            {getDistanceFromLatLonInKm(
+              latlng[0],
+              latlng[1],
+              closestCoord[0],
+              closestCoord[1]
+            ).toFixed(2)}{" "}
+            km away
+          </p>
+        ) : null}
+      </div>
       <div>
         <div className="w-full bg-gray-800">
           <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-4 py-12">
