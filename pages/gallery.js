@@ -6,12 +6,12 @@ import Web3Modal from "web3modal";
 import axios from "axios";
 import Image from "next/image";
 import { myLoader } from "../scripts/profileHelpers";
-const web3Modal = new Web3Modal({
-  network: "ropsten",
-  cacheProvider: true,
-});
 
 export default function Gallery() {
+  const web3Modal = new Web3Modal({
+    network: "ropsten",
+    cacheProvider: true,
+  });
   const [address, setAddress] = useState(null);
   const [nfts, setNfts] = useState([]);
   const { gql, useQuery, handleLogin } =
