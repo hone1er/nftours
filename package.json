@@ -15,6 +15,7 @@
   "dependencies": {
     "@3id/connect": "^0.2.5",
     "@alch/alchemy-web3": "^1.1.7",
+    "@apollo/client": "^3.4.17",
     "@ceramicnetwork/3id-did-resolver": "^1.4.7",
     "@ceramicnetwork/http-client": "^1.4.3",
     "@ceramicstudio/idx": "^0.12.2",
@@ -25,6 +26,7 @@
     "dids": "^2.4.0",
     "dotenv": "^10.0.0",
     "ethereum-waffle": "^3.4.0",
+    "graphql": "^15.7.2",
     "hardhat": "^2.6.7",
     "ipfs-http-client": "^53.0.1",
     "leaflet": "^1.7.1",
@@ -35,6 +37,7 @@
     "react-dom": "^17.0.2",
     "react-leaflet": "^3.2.2",
     "undefined": " ",
+    "urql": "^2.0.5",
     "web3": "^1.6.0",
     "web3modal": "^1.9.4"
   },

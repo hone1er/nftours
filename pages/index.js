@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import AppContext from "../AppContext";
 import router from "next/router";
 import { readProfile, updateProfile } from "../scripts/profileHelpers";
-import { login } from "../scripts/login";
 
 export default function Home() {
   const { signed, setSigned, name, setName, image, setImage } = useContext(AppContext);

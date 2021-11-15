@@ -14,7 +14,6 @@ export async function readProfile() {
 
   try {
     const data = await idx.get("basicProfile", `${address}@eip155:1`);
-    console.log(address);
     return data
   } catch (error) {
     console.log("error: ", error);

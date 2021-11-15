@@ -1,16 +1,14 @@
 import { useContext, useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
 import AppContext from "../AppContext";
-import { login } from "../scripts/login";
 import dynamic from "next/dynamic";
 import { mintNFT } from "../scripts/mint-nft";
 import { NFTlinks } from "../scripts/NFTlinks";
 import Image from "next/image";
 import { getDistanceFromLatLonInKm } from "../scripts/distanceFormula";
-import { myLoader, readProfile } from "../scripts/profileHelpers";
-
+import { myLoader } from "../scripts/profileHelpers";
 export default function Discover() {
-  const { signed, setSigned, setName, setImage, latlng, setLatlng } =
+  const { signed, setSigned, setName, setImage, latlng, setLatlng, handleLogin } =
     useContext(AppContext);
   const [locations, setLocations] = useState([]);
   const [status, setStatus] = useState(null);
@@ -22,12 +20,7 @@ export default function Discover() {
     ssr: false,
   });
 
-  async function handleLogin() {
-    const data = await readProfile();
-    if (data.name) setName(data.name);
-    if (data.avatar) setImage(data.avatar);
-    setSigned(data ? true : false);
-  }
+  
 
   function handleMint(tokenURI) {
     mintNFT(tokenURI);
@@ -42,7 +35,6 @@ export default function Discover() {
         setStatus("Locating...");
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            console.log([position.coords.latitude, position.coords.longitude]);
             setStatus(null);
             setLatlng([position.coords.latitude, position.coords.longitude]);
           },
@@ -54,6 +46,8 @@ export default function Discover() {
     };
     getLocation();
   }, [setLatlng]);
+
+
   const getLocation = () => {
     if (!navigator.geolocation) {
       setStatus("Geolocation is not supported by your browser");
@@ -61,7 +55,6 @@ export default function Discover() {
       setStatus("Locating...");
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          console.log([position.coords.latitude, position.coords.longitude]);
           setStatus(null);
           setLatlng([position.coords.latitude, position.coords.longitude]);
         },
