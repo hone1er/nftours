@@ -8,10 +8,7 @@ import Image from "next/image";
 import { myLoader } from "../scripts/profileHelpers";
 
 export default function Gallery() {
-  const web3Modal = new Web3Modal({
-    network: "ropsten",
-    cacheProvider: true,
-  });
+  
   const [address, setAddress] = useState(null);
   const [nfts, setNfts] = useState([]);
   const { gql, useQuery, handleLogin } =
@@ -31,6 +28,10 @@ export default function Gallery() {
 
      
   async function getAddress() {
+    const web3Modal = new Web3Modal({
+      network: "ropsten",
+      cacheProvider: true,
+    });
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
