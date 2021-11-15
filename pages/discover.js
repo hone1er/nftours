@@ -8,7 +8,7 @@ import Image from "next/image";
 import { getDistanceFromLatLonInKm } from "../scripts/distanceFormula";
 import { myLoader } from "../scripts/profileHelpers";
 export default function Discover() {
-  const { signed, setSigned, setName, setImage, latlng, setLatlng, handleLogin } =
+  const { signed,  latlng, setLatlng, handleLogin } =
     useContext(AppContext);
   const [locations, setLocations] = useState([]);
   const [status, setStatus] = useState(null);

@@ -25,6 +25,7 @@ export function MyApp({ Component, pageProps }) {
   const [image, setImage] = useState("");
   const [markers, setMarkers] = useState([]);
   const [latlng, setLatlng] = useState([]);
+
   async function handleLogin() {
     const data = await readProfile();
     if (data.name) setName(data.name);
