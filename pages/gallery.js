@@ -11,6 +11,7 @@ export default function Gallery() {
   
   const [address, setAddress] = useState(null);
   const [nfts, setNfts] = useState([]);
+  const [status, setStatus] = useState(null);
   const { gql, useQuery, handleLogin } =
     useContext(AppContext);
   const TOKENS = gql`
@@ -58,6 +59,7 @@ export default function Gallery() {
         return axios
         .get(token.metadataURI)
         .then(({ data }) => {
+          setStatus("Loading")
           return data
         });
       });
@@ -65,19 +67,22 @@ export default function Gallery() {
       const resolveAllPromises = Promise.all(promises)
       .then(values => {
         tempNFTs.push(values);
+        setStatus("Set")
         return values
       }).catch(error => {
+        setStatus("ERROR: ", error)
+
         console.log(error);
       });
-      console.log("SETTING")
       setNfts(tempNFTs);
     }
-  }, [loading, data, address]);
+    console.log("DATA: ", data);
+  }, [loading, data]);
 
-
-  let nftDiv = nfts.map((res) => {
-    return(
-    res.map((token, idx) => {
+  
+  console.log(loading, data, status);
+  let nftDiv = nfts.length > 0 ? nfts[0].map((token, idx) => {
+    console.log(token);
       return (
         <div
           key={idx}
@@ -104,8 +109,7 @@ export default function Gallery() {
           </div>
         </div>
       );
-    }));
-  });
+      }) : <h1>{status};</h1>
   return (
     <>
       <title>Gallery</title>
@@ -119,7 +123,7 @@ export default function Gallery() {
               </h1>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {nftDiv}
+              {nfts.length > 0 && nftDiv}
             </div>
           </section>
         </div>
