@@ -98,7 +98,7 @@ export default function Discover() {
             {obj.description}
           </p>
           <p className="text-base text-gray-500 font-normal">
-            {latlng.length > 0 ? distance + " km" : "check location"}
+            {latlng.length > 0 ? distance.toFixed(2) + " km" : "check location"}
           </p>
         </div>
         <br />
