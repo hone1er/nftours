@@ -83,10 +83,10 @@ export default function Discover() {
       >
         <div className="mb-8">
           <Image
-            className="object-center object-cover rounded-full h-36 w-36"
+            className="object-center object-cover h-36 w-36"
             loader={myLoader}
             src={obj.image}
-            alt="Picture of the author"
+            alt={obj.description}
             width={500}
             height={500}
             placeholder="blurDataURL"
@@ -102,7 +102,7 @@ export default function Discover() {
           </p>
         </div>
         <br />
-        {distance < 3.5 ? (
+        {distance < Infinity ? (
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
             onClick={() => handleMint(obj.tokenURI)}

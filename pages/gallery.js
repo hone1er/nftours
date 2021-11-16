@@ -90,7 +90,7 @@ export default function Gallery() {
         >
           <div className="mb-8">
           <Image
-              className="object-center object-cover rounded-full h-36 w-36"
+              className="object-center object-cover h-36 w-36"
               loader={myLoader}
               src={token.image}
               alt="Picture of the author"

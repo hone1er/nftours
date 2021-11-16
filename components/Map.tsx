@@ -32,7 +32,7 @@ function Map(props) {
   return (
     <MapContainer
       center={userMarker ? latlng : [38.0171441, -122.2885808]}
-      zoom={13}
+      zoom={3}
       scrollWheelZoom={false}
     >
       <TileLayer
