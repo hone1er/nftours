@@ -8,12 +8,10 @@ import Image from "next/image";
 import { myLoader } from "../scripts/profileHelpers";
 
 export default function Gallery() {
-  
   const [address, setAddress] = useState(null);
   const [nfts, setNfts] = useState([]);
   const [status, setStatus] = useState(null);
-  const { gql, useQuery, handleLogin } =
-    useContext(AppContext);
+  const { gql, useQuery, handleLogin, signed } = useContext(AppContext);
   const TOKENS = gql`
       query UserTokens {
         users(where: {id: "${address}"}) {
@@ -27,7 +25,6 @@ export default function Gallery() {
       }
       `;
 
-     
   async function getAddress() {
     const web3Modal = new Web3Modal({
       network: "ropsten",
@@ -49,70 +46,69 @@ export default function Gallery() {
     }
     addressSetter();
   }, []);
- 
-
 
   useEffect(() => {
     let tempNFTs = [];
     if (data) {
-      const promises = data['users'][0]['tokens'].map(token => {
-        return axios
-        .get(token.metadataURI)
-        .then(({ data }) => {
-          setStatus("Loading")
-          return data
+      const promises = data["users"][0]["tokens"].map((token) => {
+        return axios.get(token.metadataURI).then(({ data }) => {
+          setStatus("Loading");
+          return data;
         });
       });
-    
-      const resolveAllPromises = Promise.all(promises)
-      .then(values => {
-        tempNFTs.push(values);
-        setStatus("Set")
-        return values
-      }).catch(error => {
-        setStatus("ERROR: ", error)
 
-        console.log(error);
-      });
+      const resolveAllPromises = Promise.all(promises)
+        .then((values) => {
+          tempNFTs.push(values);
+          setStatus("Set");
+          return values;
+        })
+        .catch((error) => {
+          setStatus("ERROR: ", error);
+
+          console.log(error);
+        });
       setNfts(tempNFTs);
     }
     console.log("DATA: ", data);
   }, [loading, data]);
 
-  
   console.log(loading, data, status);
-  let nftDiv = nfts.length > 0 ? nfts[0].map((token, idx) => {
-    console.log(token);
-      return (
-        <div
-          key={idx}
-          className="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center"
-        >
-          <div className="mb-8">
-          <Image
-              className="object-center object-cover h-36 w-36"
-              loader={myLoader}
-              src={token.image}
-              alt="Picture of the author"
-              width={500}
-              height={500}
-              placeholder="blurDataURL"
-            />
+  let nftDiv =
+    nfts.length > 0 ? (
+      nfts[0].map((token, idx) => {
+        console.log(token);
+        return (
+          <div
+            key={idx}
+            className="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center"
+          >
+            <div className="mb-8">
+              <Image
+                className="object-center object-cover h-36 w-36"
+                loader={myLoader}
+                src={token.image}
+                alt="Picture of the author"
+                width={500}
+                height={500}
+                placeholder="blurDataURL"
+              />
+            </div>
+            <div className="text-center">
+              <p className="text-xl text-white font-bold mb-2">{token.name}</p>
+              <p className="text-base text-gray-300 font-normal">
+                {token.description}
+              </p>
+            </div>
           </div>
-          <div className="text-center">
-            <p className="text-xl text-white font-bold mb-2">
-              {token.name}
-            </p>
-            <p className="text-base text-gray-300 font-normal">
-              {token.description}
-            </p>
-          </div>
-        </div>
-      );
-      }) : <h1>{status};</h1>
-  return (
+        );
+      })
+    ) : (
+      <h1>{status};</h1>
+    );
+
+  let page = signed ? (
     <>
-      <title>Gallery</title>
       <div>
         <div className="w-full bg-gray-800">
           <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-4 py-12">
@@ -124,10 +120,28 @@ export default function Gallery() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {nfts.length > 0 && nftDiv}
+              {status == "Loading" && <h1>{status};</h1>}
             </div>
           </section>
         </div>
       </div>
+    </>
+  ) : (
+    <div className={styles.container}>
+      <div className={styles.main}>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+          onClick={handleLogin}
+        >
+          Login with wallet
+        </button>
+      </div>
+    </div>
+  );
+  return (
+    <>
+      <title>Gallery</title>
+      {page}
     </>
   );
 }

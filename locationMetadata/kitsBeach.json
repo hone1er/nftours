@@ -1,14 +1,12 @@
 {
-    "attributes": [
-      {
-
-          "longitude": -123.15402100302073,
-          "latitude": 49.27507529830925,
-          "maxDistance": 1
-      }
-       
-    ],
-    "description": "Vancouver, BC",
-    "image": "https://gateway.pinata.cloud/ipfs/QmboYLZFLfVJMEgZQuJFVVrHycJLVLiR2SUtL6QofyJg4U/image4.jpeg",
-    "name": "Kits Beach"
-  }
+  "attributes": [
+    {
+      "longitude": -123.15402100302073,
+      "latitude": 49.27507529830925,
+      "maxDistance": 1
+    }
+  ],
+  "description": "Vancouver, BC",
+  "image": "https://gateway.pinata.cloud/ipfs/QmboYLZFLfVJMEgZQuJFVVrHycJLVLiR2SUtL6QofyJg4U/image4.jpeg",
+  "name": "Kits Beach"
+}

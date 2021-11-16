@@ -6,7 +6,6 @@ import { DID } from "dids";
 import { IDX } from "@ceramicstudio/idx";
 const endpoint = "https://ceramic-clay.3boxlabs.com";
 
-
 export async function readProfile() {
   const [address] = await connect();
   const ceramic = new CeramicClient(endpoint);
@@ -14,11 +13,11 @@ export async function readProfile() {
 
   try {
     const data = await idx.get("basicProfile", `${address}@eip155:1`);
-    return data
+    return data;
   } catch (error) {
     console.log("error: ", error);
-    alert("No account found \n Please create a new account")
-    return false
+
+    return false;
   }
 }
 
@@ -48,10 +47,8 @@ export async function updateProfile(name, image) {
   });
   console.log(name, image);
   console.log("Profile updated!");
-  return true
+  return true;
 }
-
-
 
 async function connect() {
   const addresses = await window.ethereum.request({

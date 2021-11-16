@@ -46,7 +46,7 @@ export const NFTlinks = [
   {
     city: "Tuscon",
     country: "Arizona",
-    location: [32.221779, -111.144310],
+    location: [32.221779, -111.14431],
     tokenURI:
       "https://gateway.pinata.cloud/ipfs/QmdxYSVWofjT2hZQypGBB16bVLp2hiQhxLrmSXNqXmegsb/tuscon.json",
     description: "Tuscon, AZ",

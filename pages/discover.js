@@ -8,8 +8,7 @@ import Image from "next/image";
 import { getDistanceFromLatLonInKm } from "../scripts/distanceFormula";
 import { myLoader } from "../scripts/profileHelpers";
 export default function Discover() {
-  const { signed,  latlng, setLatlng, handleLogin } =
-    useContext(AppContext);
+  const { signed, latlng, setLatlng, handleLogin } = useContext(AppContext);
   const [locations, setLocations] = useState([]);
   const [status, setStatus] = useState(null);
   const [distance, setDistance] = useState(null);
@@ -19,8 +18,6 @@ export default function Discover() {
   const MapWithNoSSR = dynamic(() => import("../components/Map.tsx"), {
     ssr: false,
   });
-
-  
 
   function handleMint(tokenURI) {
     mintNFT(tokenURI);
@@ -46,7 +43,6 @@ export default function Discover() {
     };
     getLocation();
   }, [setLatlng]);
-
 
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -76,6 +72,7 @@ export default function Discover() {
       setClosestCoord([obj.location[0], obj.location[1]]);
       setClosestDist(distance);
     }
+    console.log(obj);
     return (
       <div
         key={idx}
@@ -102,7 +99,7 @@ export default function Discover() {
           </p>
         </div>
         <br />
-        {distance < Infinity ? (
+        {distance < 1 ? (
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
             onClick={() => handleMint(obj.tokenURI)}
