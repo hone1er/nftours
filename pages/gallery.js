@@ -14,7 +14,7 @@ export default function Gallery() {
   const [modalItem, setModalItem] = useState(null);
   function toggleModal(item) {
     setModal(modal == "visible" ? "invisible" : "visible");
-    setModalItem(item);
+    setModalItem(nfts[0][item]);
     console.log("TOGGLE: ", modal == "invisible" ? "visible" : "invisible");
   }
 
@@ -83,7 +83,6 @@ export default function Gallery() {
   let nftDiv =
     nfts.length > 0 ? (
       nfts[0].map((token, idx) => {
-        console.log(nfts[0][idx]);
         return (
           <button
             onClick={() => toggleModal(idx)}
@@ -145,7 +144,12 @@ export default function Gallery() {
       </div>
     </div>
   );
-  console.log("MODAL: ", modal);
+  console.log(
+    "MODAL: ",
+    modalItem,
+    "MODALITEM: ",
+    nfts[0] ? nfts[0][modalItem] : "no"
+  );
   return (
     <>
       <title>Gallery</title>
@@ -153,10 +157,10 @@ export default function Gallery() {
       <Modal
         item={
           modalItem && {
-            image: nfts[0][modalItem].image,
-            name: nfts[0][modalItem].name,
-            description: nfts[0][modalItem].description,
-            attributes: nfts[0][modalItem].attributes[0],
+            image: (nfts[0] && modalItem.image) || "no",
+            name: (nfts[0] && modalItem.name) || "no",
+            description: (nfts[0] && modalItem.description) || "no",
+            attributes: (nfts[0] && modalItem.attributes[0]) || "no",
           }
         }
         visible={modal}

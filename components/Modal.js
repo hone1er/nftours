@@ -5,13 +5,12 @@ import { myLoader } from "../scripts/profileHelpers";
 import styles from "../styles/Home.module.css";
 
 function Modal(props) {
-  console.log(props);
+  console.log(props.item);
   const { modal, setModal } = useContext(AppContext);
   const visibility = modal;
   function toggleModal() {
     setModal(modal == "visible" ? "invisible" : "visible");
   }
-  console.log(props.item);
   return (
     <div x-data="{ show: true }" className={visibility}>
       <div className="flex justify-center"></div>
