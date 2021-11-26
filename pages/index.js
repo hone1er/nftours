@@ -57,6 +57,7 @@ export default function Home() {
                 alt="user profile pic"
                 width={150}
                 height={150}
+                placeholder="blurDataURL"
               ></Image>
             )}
           </div>
