@@ -6,14 +6,20 @@ import Web3Modal from "web3modal";
 import axios from "axios";
 import Image from "next/image";
 import { myLoader } from "../scripts/profileHelpers";
-
+import Modal from "../components/Modal";
 export default function Gallery() {
   const [address, setAddress] = useState(null);
   const [nfts, setNfts] = useState([]);
   const [status, setStatus] = useState(null);
-  const [modal, setModal] = useState(false);
   const [modalItem, setModalItem] = useState(null);
-  const { gql, useQuery, handleLogin, signed } = useContext(AppContext);
+  function toggleModal(item) {
+    setModal(modal == "visible" ? "invisible" : "visible");
+    setModalItem(item);
+    console.log("TOGGLE: ", modal == "invisible" ? "visible" : "invisible");
+  }
+
+  const { gql, useQuery, handleLogin, signed, modal, setModal } =
+    useContext(AppContext);
   const TOKENS = gql`
       query UserTokens {
         users(where: {id: "${address}"}) {
@@ -26,15 +32,6 @@ export default function Gallery() {
         }
       }
       `;
-
-  function toggleModal(item) {
-    setModal(!modal);
-    setModalItem(item);
-    console.log(item);
-    console.log(nfts[0]);
-  }
-
-  useEffect(() => {}, [modal]);
 
   async function getAddress() {
     const web3Modal = new Web3Modal({
@@ -86,6 +83,7 @@ export default function Gallery() {
   let nftDiv =
     nfts.length > 0 ? (
       nfts[0].map((token, idx) => {
+        console.log(nfts[0][idx]);
         return (
           <button
             onClick={() => toggleModal(idx)}
@@ -147,62 +145,22 @@ export default function Gallery() {
       </div>
     </div>
   );
+  console.log("MODAL: ", modal);
   return (
     <>
       <title>Gallery</title>
       {page}
-
-      <div x-data="{ show: true }" className={!modal ? "invisible" : "visible"}>
-        <div className="flex justify-center"></div>
-        <div
-          x-show="show"
-          tabIndex="0"
-          className="z-40 overflow-auto left-0 top-0 bottom-0 right-0 w-full h-full fixed"
-        >
-          <div
-            className="z-50 relative p-3 mx-auto my-0 max-w-full"
-            style={{ width: "600px" }}
-          >
-            <div className="bg-white rounded shadow-lg border flex flex-col overflow-hidden">
-              <button
-                className="fill-current h-6 w-6 absolute right-0 top-0 m-6 font-3xl font-bold"
-                onClick={() => toggleModal(null)}
-              >
-                &times;
-              </button>
-              <div className="px-6 py-3 text-xl border-b font-bold">
-                {modalItem && nfts[0][modalItem].name}
-              </div>
-              <div className="p-6 flex-grow">
-                {modalItem && (
-                  <Image
-                    className="object-center object-cover h-36 w-36"
-                    loader={myLoader}
-                    src={nfts[0][modalItem].image}
-                    alt="Picture of the author"
-                    width={500}
-                    height={500}
-                    placeholder="blurDataURL"
-                  />
-                )}
-                <p>{modalItem && nfts[0][modalItem].description}</p>
-              </div>
-              <div className="px-6 py-3 border-t">
-                <div className="flex justify-end">
-                  <button
-                    type="button"
-                    className="bg-gray-700 text-gray-100 rounded px-4 py-2 mr-1"
-                    onClick={() => toggleModal(null)}
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="z-40 overflow-auto left-0 top-0 bottom-0 right-0 w-full h-full fixed bg-black opacity-50"></div>
-        </div>
-      </div>
+      <Modal
+        item={
+          modalItem && {
+            image: nfts[0][modalItem].image,
+            name: nfts[0][modalItem].name,
+            description: nfts[0][modalItem].description,
+            attributes: nfts[0][modalItem].attributes[0],
+          }
+        }
+        visible={modal}
+      />
     </>
   );
 }

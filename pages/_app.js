@@ -26,6 +26,7 @@ export function MyApp({ Component, pageProps }) {
   const [image, setImage] = useState("");
   const [markers, setMarkers] = useState([]);
   const [latlng, setLatlng] = useState([]);
+  const [modal, setModal] = useState("invisible");
 
   async function handleLogin() {
     const data = await readProfile();
@@ -37,7 +38,6 @@ export function MyApp({ Component, pageProps }) {
   // check if user has IDX profile on load
   useEffect(() => {
     async function handleLogin() {
-
       const data = await readProfile();
       if (!data) {
         alert("No account found \n Please create a new account");
@@ -108,6 +108,8 @@ export function MyApp({ Component, pageProps }) {
           handleLogin,
           id,
           setID,
+          modal,
+          setModal,
         }}
       >
         <div>
