@@ -157,10 +157,10 @@ export default function Gallery() {
       <Modal
         item={
           modalItem && {
-            image: (nfts[0] && modalItem.image) || "no",
-            name: (nfts[0] && modalItem.name) || "no",
-            description: (nfts[0] && modalItem.description) || "no",
-            attributes: (nfts[0] && modalItem.attributes[0]) || "no",
+            image: modalItem.image,
+            name: modalItem.name,
+            description: modalItem.description,
+            attributes: modalItem.attributes[0],
           }
         }
         visible={modal}
