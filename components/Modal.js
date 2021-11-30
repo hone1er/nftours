@@ -22,7 +22,7 @@ function Modal(props) {
         >
           <div
             className="z-50 relative p-3 mx-auto my-0 max-w-full"
-            style={{ width: "600px" }}
+            style={{ width: "1000px" }}
           >
             <div className="bg-white rounded shadow-lg border flex flex-col overflow-hidden">
               <button
@@ -34,23 +34,37 @@ function Modal(props) {
               <div className="px-6 py-3 text-xl border-b font-bold">
                 {props.item.description}
               </div>
-              <div className="p-6 flex-grow">
+              <div className="p-6 flex-grow md:flex max-w-md text-center  max-w-full justify-around bg-gray-700">
                 {props.item.image && (
                   <Image
-                    className="object-center object-cover h-36 w-36"
+                    className="object-center object-cover h-32 w-32 bg-white m-2"
                     loader={myLoader}
                     src={props.item.image}
                     alt="Picture of the author"
-                    width={500}
-                    height={500}
+                    width={375}
+                    height={375}
                     placeholder="blurDataURL"
                   />
                 )}
-                <h1 className="text-2xl font-semibold mt-2 mb-2">
-                  {props.item.name}
-                </h1>
-                <p>Latitude: {props.item.attributes.latitude}</p>
-                <p>Longitude: {props.item.attributes.longitude}</p>
+                <div className="md:w-5/12 w-full p-5 pt-2  rounded-md bg-gray-800 shadow-md">
+                  <h1 className="lg:text-4xl text-3xl font-semibold mt-2 mb-2 bg-gray-100 p-6">
+                    {props.item.name}
+                  </h1>
+                  <div className="bg-gray-100 md:mt-8 mt-4 p-4 h-64">
+                    <div className="flex border-b borer-black mt-3">
+                      <p className="font-medium pr-1">Location: </p>
+                      <p> {props.item.description}</p>
+                    </div>
+                    <div className="flex border-b borer-black mt-3">
+                      <p className="font-medium pr-1">Longitude: </p>
+                      <p>{props.item.attributes.longitude}</p>
+                    </div>
+                    <div className="flex border-b borer-black mt-3">
+                      <p className="font-medium pr-1">Latitude: </p>
+                      <p> {props.item.attributes.latitude}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className="px-6 py-3 border-t">
                 <div className="flex justify-end">
