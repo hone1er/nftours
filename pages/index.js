@@ -7,23 +7,23 @@ import Image from "next/image";
 import { myLoader } from "../scripts/profileHelpers";
 
 export default function Home() {
-  const { signed, setSigned, name, setName, image, id, setID, setImage } =
-    useContext(AppContext);
+  const {
+    signed,
+    setSigned,
+    name,
+    setName,
+    image,
+    id,
+    setID,
+    setImage,
+    handleSignUp,
+  } = useContext(AppContext);
 
   const [visible, setVisible] = useState("invisible");
-  const [tempName, setTempName] = useState();
-  const [tempImage, setTempImage] = useState();
 
   function handleToggle() {
     setVisible(visible == "invisible" ? "visible" : "invisible");
     console.log(!visible);
-  }
-  async function handleSignUp() {
-    const updated = await updateProfile(name, image);
-    if (updated) {
-      setID(name);
-      setSigned(true);
-    }
   }
 
   async function handleLogin() {

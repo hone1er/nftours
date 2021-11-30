@@ -87,7 +87,6 @@
   transition: color 0.15s ease, border-color 0.15s ease;
   max-width: 300px;
   min-width: 150px;
-
 }
 
 .card:hover,
@@ -112,9 +111,6 @@
   height: 1em;
   margin-left: 0.5rem;
 }
-
-
-
 
 @media (max-width: 600px) {
   .grid {

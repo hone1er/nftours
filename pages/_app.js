@@ -4,7 +4,11 @@ import React, { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import AppContext from "../AppContext";
-import { myLoader, readProfile } from "../scripts/profileHelpers";
+import {
+  myLoader,
+  readProfile,
+  updateProfile,
+} from "../scripts/profileHelpers";
 
 import {
   ApolloClient,
@@ -13,6 +17,7 @@ import {
   useQuery,
   gql,
 } from "@apollo/client";
+import ProfileModal from "../components/ProfileModal";
 
 const client = new ApolloClient({
   uri: "https://api.thegraph.com/subgraphs/name/hone1er/nftour",
@@ -24,15 +29,40 @@ export function MyApp({ Component, pageProps }) {
   const [name, setName] = useState("");
   const [id, setID] = useState("");
   const [image, setImage] = useState("");
+
   const [markers, setMarkers] = useState([]);
   const [latlng, setLatlng] = useState([]);
+
   const [modal, setModal] = useState("invisible");
+  const [accountWindow, setAccountWindow] = useState(false);
+  const [profileModal, setProfileModal] = useState(false);
 
   async function handleLogin() {
     const data = await readProfile();
     if (data.name) setName(data.name);
     if (data.avatar) setImage(data.avatar);
     setSigned(data ? true : false);
+  }
+
+  async function handleSignUp() {
+    const updated = await updateProfile(name, image);
+    if (updated) {
+      setID(name);
+      setSigned(true);
+    }
+  }
+
+  function handleAccountWindow() {
+    setAccountWindow(!accountWindow);
+  }
+
+  function openProfileModal() {
+    setAccountWindow(!accountWindow);
+    setProfileModal(!profileModal);
+  }
+
+  function handleToggle() {
+    setProfileModal(!profileModal);
   }
 
   // check if user has IDX profile on load
@@ -78,11 +108,32 @@ export function MyApp({ Component, pageProps }) {
             <a className="mr-4 text-purple-500">My NFTs</a>
           </Link>
         </div>
-        <div className="ml-auto account-wrap">
-          <h1>{name}</h1>
-          {img}
+        <div className="absolute top-auto right-0 ml-auto text-center account-wrap">
+          <button onClick={handleAccountWindow}>
+            <h1>{name}</h1>
+            {img}
+          </button>
+          <div
+            className={
+              accountWindow
+                ? "relative w-64 h-fit p-auto mt-2 bg-gray-100 flex-wrap z-50 arrow_box"
+                : "relative w-64 h-fit bg-gray-100 flex-wrap z-50 invisible"
+            }
+          >
+            <button
+              className="bg-white p-4 w-full hover:shadow"
+              onClick={openProfileModal}
+            >
+              Edit account
+            </button>
+          </div>
         </div>
       </nav>
+      <ProfileModal
+        visible={profileModal ? "visible" : "invisible"}
+        handleToggle={() => handleToggle()}
+        handleSignUp={() => handleSignUp()}
+      ></ProfileModal>
     </>
   );
 

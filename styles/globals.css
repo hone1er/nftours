@@ -2,10 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-.leaflet-container {
-    width: 100vw;
-    height: 80vh;
-  }
+.leaflet-container,
+.leaflet-touch {
+  width: 100vw;
+  height: 80vh;
+  position: relative !important;
+  z-index: -1 !important;
+}
 
 .account-wrap {
   float: right;
@@ -22,4 +25,19 @@
 
 .coordinate-wrap > button {
   margin-bottom: 10px;
+}
+
+.arrow_box:after {
+  bottom: 95%;
+  left: 50%;
+  border: solid transparent;
+  content: "";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(243, 244, 246, 0);
+  border-bottom-color: #000000;
+  border-width: 15px;
+  margin-left: -15px;
 }
