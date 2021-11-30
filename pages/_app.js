@@ -108,18 +108,16 @@ export function MyApp({ Component, pageProps }) {
             <a className="mr-4 text-purple-500">My NFTs</a>
           </Link>
         </div>
-        <div className="absolute top-auto right-0 ml-auto text-center account-wrap">
-          <button onClick={handleAccountWindow}>
-            <h1>{name}</h1>
-            {img}
-          </button>
+        <div className="absolute top-8 right-0 ml-auto text-center account-wrap">
+          <button onClick={handleAccountWindow}>{img}</button>
           <div
             className={
               accountWindow
-                ? "relative w-64 h-fit p-auto mt-2 bg-gray-100 flex-wrap z-50 arrow_box"
-                : "relative w-64 h-fit bg-gray-100 flex-wrap z-50 invisible"
+                ? "relative w-48 h-fit p-auto mt-2 bg-gray-100 flex-wrap z-50 arrow_box"
+                : "relative w-48 h-fit bg-gray-100 flex-wrap z-50 invisible"
             }
           >
+            <h1 className="md:text-xl text-md">{name}</h1>
             <button
               className="bg-white p-4 w-full hover:shadow"
               onClick={openProfileModal}

@@ -34,7 +34,7 @@ function Modal(props) {
               <div className="px-6 py-3 text-xl border-b font-bold">
                 {props.item.description}
               </div>
-              <div className="p-6 flex-grow md:flex max-w-md text-center  max-w-full justify-around bg-gray-700">
+              <div className="p-6 flex-grow md:flex max-w-md text-center  max-w-full justify-around bg-gray-800">
                 {props.item.image && (
                   <Image
                     className="object-center object-cover h-32 w-32 bg-white m-2"
@@ -46,8 +46,8 @@ function Modal(props) {
                     placeholder="blurDataURL"
                   />
                 )}
-                <div className="md:w-5/12 w-full p-5 pt-2  rounded-md bg-gray-800 shadow-md">
-                  <h1 className="lg:text-4xl text-3xl font-semibold mt-2 mb-2 bg-gray-100 p-6">
+                <div className="md:w-5/12 w-full p-5 pt-2  rounded-md bg-gray-900 shadow-md">
+                  <h1 className="lg:text-4xl text-3xl font-semibold mt-2 mb-2 bg-gray-200 p-6">
                     {props.item.name}
                   </h1>
                   <div className="bg-gray-100 md:mt-8 mt-4 p-4 h-64">

@@ -1,17 +1,10 @@
 import Image from "next/image";
 import React, { useContext } from "react";
 import AppContext from "../AppContext";
-import { myLoader, updateProfile } from "../scripts/profileHelpers";
+import { myLoader } from "../scripts/profileHelpers";
 function ProfileModal(props) {
   const { setName, name, setImage, image, id } = useContext(AppContext);
 
-  async function handleSignUp() {
-    const updated = await updateProfile(name, image);
-    if (updated) {
-      setID(name);
-      setSigned(true);
-    }
-  }
   return (
     <div x-data="{ show: true }" className={props.visible}>
       <div className="flex justify-center"></div>
