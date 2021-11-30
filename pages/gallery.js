@@ -94,7 +94,7 @@ export default function Gallery() {
                 className="object-center object-cover h-36 w-36"
                 loader={myLoader}
                 src={token.image}
-                alt="Picture of the author"
+                alt={token.description}
                 width={500}
                 height={500}
                 placeholder="blurDataURL"
