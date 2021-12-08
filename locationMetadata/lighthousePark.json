@@ -6,7 +6,8 @@
       "maxDistance": 1
     }
   ],
-  "description": "Vancouver, BC",
-  "image": "https://gateway.pinata.cloud/ipfs/QmboYLZFLfVJMEgZQuJFVVrHycJLVLiR2SUtL6QofyJg4U/image6.jpeg",
-  "name": "Lighthouse Park"
+  "location": "Vancouver, BC",
+  "image": "https://gateway.pinata.cloud/ipfs/QmTeEu4XS3KYyjUar1AttWNREtgwvbWJiEnnftULEc1322/image6.jpeg",
+  "name": "Lighthouse Park",
+  "photographer": "Jill Schweber"
 }

@@ -6,7 +6,8 @@
       "maxDistance": 1
     }
   ],
-  "description": "Tuscon, AZ",
-  "image": "https://gateway.pinata.cloud/ipfs/QmboYLZFLfVJMEgZQuJFVVrHycJLVLiR2SUtL6QofyJg4U/image0.jpeg",
-  "name": "Cacti"
+  "location": "Tuscon, AZ",
+  "image": "https://gateway.pinata.cloud/ipfs/QmTeEu4XS3KYyjUar1AttWNREtgwvbWJiEnnftULEc1322/image0.jpeg",
+  "name": "Cacti",
+  "photographer": "Jill Schweber"
 }
