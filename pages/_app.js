@@ -45,6 +45,7 @@ export function MyApp({ Component, pageProps }) {
   }
 
   async function handleSignUp() {
+    console.log("signing up");
     const updated = await updateProfile(name, image);
     if (updated) {
       setID(name);
@@ -159,6 +160,7 @@ export function MyApp({ Component, pageProps }) {
           setID,
           modal,
           setModal,
+          handleSignUp
         }}
       >
         <div>
