@@ -58,16 +58,14 @@ export default function Gallery() {
   useEffect(() => {
     let tempNFTs = [];
     if (data) {
-      try {
+      
         const promises = data["users"][0]["tokens"].map((token) => {
           return axios.get(token.metadataURI).then(({ data }) => {
             setStatus("Loading");
             return data;
           });
         });
-      } catch (error) {
-        console.log(error);
-      }
+      
 
       const resolveAllPromises = Promise.all(promises)
         .then((values) => {
