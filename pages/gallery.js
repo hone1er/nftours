@@ -49,10 +49,17 @@ export default function Gallery() {
 
   useEffect(() => {
     async function addressSetter() {
+      
+      try {
       const address = await getAddress();
       setAddress(address.toLowerCase());
+      
     }
-    addressSetter();
+    catch(error) {
+      console.log(error);
+    }
+  }
+      addressSetter();
   }, []);
 
   useEffect(() => {
