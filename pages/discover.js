@@ -61,7 +61,19 @@ export default function Discover() {
     }
   };
 
-  const NFTcards = locations.map((obj, idx) => {
+  const NFTcards = locations
+  .sort((location1, location2) => getDistanceFromLatLonInKm(
+    location1.location[0],
+    location1.location[1],
+    latlng[0],
+    latlng[1]
+  ) - getDistanceFromLatLonInKm(
+    location2.location[0],
+    location2.location[1],
+    latlng[0],
+    latlng[1]
+  ))
+  .map((obj, idx) => {
     const distance = getDistanceFromLatLonInKm(
       obj.location[0],
       obj.location[1],
