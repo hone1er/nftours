@@ -7,6 +7,7 @@ import axios from "axios";
 import Image from "next/image";
 import { myLoader } from "../scripts/profileHelpers";
 import Modal from "../components/Modal";
+import TokenGate from "../components/TokenGate";
 export default function Gallery() {
   const [address, setAddress] = useState(null);
   const [nfts, setNfts] = useState([]);
@@ -49,17 +50,14 @@ export default function Gallery() {
 
   useEffect(() => {
     async function addressSetter() {
-      
       try {
-      const address = await getAddress();
-      setAddress(address.toLowerCase());
-      
+        const address = await getAddress();
+        setAddress(address.toLowerCase());
+      } catch (error) {
+        console.log(error);
+      }
     }
-    catch(error) {
-      console.log(error);
-    }
-  }
-      addressSetter();
+    addressSetter();
   }, []);
 
   useEffect(() => {
@@ -161,10 +159,18 @@ export default function Gallery() {
     "MODALITEM: ",
     nfts[0] ? nfts[0][modalItem] : "no"
   );
+  const addy = address;
   return (
     <>
       <title>Gallery</title>
-      {page}
+      <TokenGate
+        contractAddress={"0xd7beaa6d7bd084cceb1112b996e18f3d8b266dd0"}
+        signer={address}
+        requiredQuantity={3}
+      >
+        {page}
+      </TokenGate>
+
       <Modal
         item={
           modalItem && {
