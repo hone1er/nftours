@@ -4,6 +4,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import AppContext from "../AppContext";
+import { ChakraProvider } from "@chakra-ui/react";
 import {
   myLoader,
   readProfile,
@@ -141,34 +142,36 @@ export function MyApp({ Component, pageProps }) {
   const noNav = ["/"];
   return (
     <ApolloProvider client={client}>
-      <AppContext.Provider
-        value={{
-          signed,
-          setSigned,
-          name,
-          setName,
-          image,
-          setImage,
-          markers,
-          setMarkers,
-          latlng,
-          setLatlng,
-          useQuery,
-          gql,
-          handleLogin,
-          id,
-          setID,
-          modal,
-          setModal,
-          handleSignUp
-        }}
-      >
-        <div>
-          {noNav.includes(pathname) ? null : Nav}
+      <ChakraProvider>
+        <AppContext.Provider
+          value={{
+            signed,
+            setSigned,
+            name,
+            setName,
+            image,
+            setImage,
+            markers,
+            setMarkers,
+            latlng,
+            setLatlng,
+            useQuery,
+            gql,
+            handleLogin,
+            id,
+            setID,
+            modal,
+            setModal,
+            handleSignUp,
+          }}
+        >
+          <div>
+            {noNav.includes(pathname) ? null : Nav}
 
-          <Component {...pageProps} />
-        </div>
-      </AppContext.Provider>
+            <Component {...pageProps} />
+          </div>
+        </AppContext.Provider>
+      </ChakraProvider>
     </ApolloProvider>
   );
 }

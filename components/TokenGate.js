@@ -3,17 +3,19 @@ import React, { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import Web3Modal from "web3modal";
 import abi from "../nftour/abis/Contract.json";
-
+import { Spinner } from "@chakra-ui/react";
 export default function TokenGate({
   children,
   contractAddress,
   requiredQuantity = 1,
-  signer,
-  className,
+  successClassName,
+  deniedClassName,
+  loadingClassName,
 }) {
-  // track token quantity in wallet
+  // token quantity in wallet
   const [tokenQuantity, setTokenQuantity] = useState();
-  // connect to contract address
+  const [loadedStatus, setloadedStatus] = useState(false);
+  // connect to contract address to get balance
   async function getTokenBalance() {
     const web3Modal = new Web3Modal({
       network: "ropsten",
@@ -24,12 +26,17 @@ export default function TokenGate({
     const signer = provider.getSigner();
     const address = await signer.getAddress();
     const contract = new ethers.Contract(contractAddress, abi, signer);
-    const balance = await contract.balanceOf(address);
-    console.log(parseInt(balance, 16));
-    return balance;
+    try {
+      const balance = await contract.balanceOf(address);
+      setloadedStatus(true);
+      console.log(parseInt(balance, 16));
+      return balance;
+    } catch (error) {
+      console.log(error);
+    }
+    return;
   }
 
-  // check if signer owns token
   useEffect(() => {
     async function setBalance() {
       const balance = await getTokenBalance();
@@ -38,12 +45,20 @@ export default function TokenGate({
     setBalance();
   }, []);
 
-  // verify token quantity in wallet is greater than required amount(optional, defaults to 1)
-
   // return children within simple container(className optional)
-  return tokenQuantity >= requiredQuantity ? (
-    <div>{children}</div>
+  return loadedStatus ? (
+    // verify token quantity in wallet is greater than required amount(optional, defaults to 1)
+    tokenQuantity >= requiredQuantity ? (
+      <div className={successClassName}>{children}</div>
+    ) : (
+      <div className={deniedClassName}>
+        {/* maybe make the below line an optional message? If left out returns null or empty div */}
+        {requiredQuantity} tokens required to access this content
+      </div>
+    )
   ) : (
-    <div>{signer}</div>
+    <div className={loadingClassName}>
+      <Spinner />
+    </div>
   );
 }

@@ -40,7 +40,7 @@ function Modal(props) {
                     className="object-center object-cover h-32 w-32 bg-white m-2"
                     loader={myLoader}
                     src={props.item.image}
-                    alt="Picture of the author"
+                    alt={props.item.description}
                     width={375}
                     height={375}
                     placeholder="blurDataURL"

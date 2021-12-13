@@ -123,24 +123,22 @@ export default function Gallery() {
     );
 
   let page = signed ? (
-    <>
-      <div>
-        <div className="w-full min-h-screen bg-gray-800">
-          <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-4 py-12">
-            <div className="text-center pb-12 sm:pb-20 sm:mt-20">
-              <h2 className="text-base font-bold text-indigo-600">Gallery</h2>
-              <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-white">
-                Your Collection
-              </h1>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {nfts.length > 0 && nftDiv}
-              {status == "Loading" && <h1>{status};</h1>}
-            </div>
-          </section>
-        </div>
+    <div className="w-full">
+      <div className="w-full min-h-screen bg-gray-800">
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-4 py-12">
+          <div className="text-center pb-12 sm:pb-20 sm:mt-20">
+            <h2 className="text-base font-bold text-indigo-600">Gallery</h2>
+            <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-white">
+              Your Collection
+            </h1>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {nfts.length > 0 && nftDiv}
+            {status == "Loading" && <h1>{status};</h1>}
+          </div>
+        </section>
       </div>
-    </>
+    </div>
   ) : (
     <div className={styles.container}>
       <div className={styles.main}>
@@ -163,13 +161,16 @@ export default function Gallery() {
   return (
     <>
       <title>Gallery</title>
-      <TokenGate
-        contractAddress={"0xd7beaa6d7bd084cceb1112b996e18f3d8b266dd0"}
-        signer={address}
-        requiredQuantity={3}
-      >
-        {page}
-      </TokenGate>
+      <div className="flex w-full h-screen justify-center items-center">
+        <TokenGate
+          contractAddress={"0xd7beaa6d7bd084cceb1112b996e18f3d8b266dd0"}
+          signer={address}
+          requiredQuantity={1}
+          successClassName={"w-full"}
+        >
+          {page}
+        </TokenGate>
+      </div>
 
       <Modal
         item={
