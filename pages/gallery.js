@@ -93,29 +93,37 @@ export default function Gallery() {
     nfts.length > 0 ? (
       nfts[0].map((token, idx) => {
         return (
-          <button
-            onClick={() => toggleModal(idx)}
-            key={idx}
-            className="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center"
+          <TokenGate
+            contractAddress={"0xd7beaa6d7bd084cceb1112b996e18f3d8b266dd0"}
+            requiredQuantity={idx + 2}
+            successClassName={"w-full"}
           >
-            <div className="mb-8">
-              <Image
-                className="object-center object-cover h-36 w-36"
-                loader={myLoader}
-                src={token.image}
-                alt={token.description}
-                width={500}
-                height={500}
-                placeholder="blurDataURL"
-              />
-            </div>
-            <div className="text-center">
-              <p className="text-xl text-white font-bold mb-2">{token.name}</p>
-              <p className="text-base text-gray-300 font-normal">
-                {token.description}
-              </p>
-            </div>
-          </button>
+            <button
+              onClick={() => toggleModal(idx)}
+              key={idx}
+              className="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center"
+            >
+              <div className="mb-8">
+                <Image
+                  className="object-center object-cover h-36 w-36"
+                  loader={myLoader}
+                  src={token.image}
+                  alt={token.description}
+                  width={500}
+                  height={500}
+                  placeholder="blurDataURL"
+                />
+              </div>
+              <div className="text-center">
+                <p className="text-xl text-white font-bold mb-2">
+                  {token.name}
+                </p>
+                <p className="text-base text-gray-300 font-normal">
+                  {token.description}
+                </p>
+              </div>
+            </button>
+          </TokenGate>
         );
       })
     ) : (
@@ -162,14 +170,7 @@ export default function Gallery() {
     <>
       <title>Gallery</title>
       <div className="flex w-full h-screen justify-center items-center">
-        <TokenGate
-          contractAddress={"0xd7beaa6d7bd084cceb1112b996e18f3d8b266dd0"}
-          signer={address}
-          requiredQuantity={1}
-          successClassName={"w-full"}
-        >
-          {page}
-        </TokenGate>
+        {page}
       </div>
 
       <Modal

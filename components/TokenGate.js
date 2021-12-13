@@ -57,8 +57,6 @@ export default function TokenGate({
       </div>
     )
   ) : (
-    <div className={loadingClassName}>
-      <Spinner />
-    </div>
+    <div className={loadingClassName}></div>
   );
 }
