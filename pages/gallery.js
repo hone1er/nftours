@@ -7,7 +7,6 @@ import axios from "axios";
 import Image from "next/image";
 import { myLoader } from "../scripts/profileHelpers";
 import Modal from "../components/Modal";
-import TokenGate from "../components/TokenGate";
 export default function Gallery() {
   const [address, setAddress] = useState(null);
   const [nfts, setNfts] = useState([]);
@@ -93,37 +92,29 @@ export default function Gallery() {
     nfts.length > 0 ? (
       nfts[0].map((token, idx) => {
         return (
-          <TokenGate
-            contractAddress={"0xd7beaa6d7bd084cceb1112b996e18f3d8b266dd0"}
-            requiredQuantity={idx + 2}
-            successClassName={"w-full"}
+          <button
+            onClick={() => toggleModal(idx)}
+            key={idx}
+            className="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center"
           >
-            <button
-              onClick={() => toggleModal(idx)}
-              key={idx}
-              className="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center"
-            >
-              <div className="mb-8">
-                <Image
-                  className="object-center object-cover h-36 w-36"
-                  loader={myLoader}
-                  src={token.image}
-                  alt={token.description}
-                  width={500}
-                  height={500}
-                  placeholder="blurDataURL"
-                />
-              </div>
-              <div className="text-center">
-                <p className="text-xl text-white font-bold mb-2">
-                  {token.name}
-                </p>
-                <p className="text-base text-gray-300 font-normal">
-                  {token.description}
-                </p>
-              </div>
-            </button>
-          </TokenGate>
+            <div className="mb-8">
+              <Image
+                className="object-center object-cover h-36 w-36"
+                loader={myLoader}
+                src={token.image}
+                alt={token.description}
+                width={500}
+                height={500}
+                placeholder="blurDataURL"
+              />
+            </div>
+            <div className="text-center">
+              <p className="text-xl text-white font-bold mb-2">{token.name}</p>
+              <p className="text-base text-gray-300 font-normal">
+                {token.description}
+              </p>
+            </div>
+          </button>
         );
       })
     ) : (
