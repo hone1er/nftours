@@ -45,15 +45,6 @@ export function MyApp({ Component, pageProps }) {
     setSigned(data ? true : false);
   }
 
-  async function handleSignUp() {
-    console.log("signing up");
-    const updated = await updateProfile(name, image);
-    if (updated) {
-      setID(name);
-      setSigned(true);
-    }
-  }
-
   function handleAccountWindow() {
     setAccountWindow(!accountWindow);
   }
@@ -89,7 +80,7 @@ export function MyApp({ Component, pageProps }) {
       className="object-center object-cover rounded-full h-36 w-36"
       loader={myLoader}
       src={image}
-      alt="Picture of the author"
+      alt=" Profile Picture"
       width={50}
       height={50}
     ></Image>
@@ -115,8 +106,8 @@ export function MyApp({ Component, pageProps }) {
           <div
             className={
               accountWindow
-                ? "relative w-48 h-fit p-auto mt-2 bg-gray-100 flex-wrap z-50 arrow_box"
-                : "relative w-48 h-fit bg-gray-100 flex-wrap z-50 invisible"
+                ? "relative w-max h-fit p-auto mt-2 bg-gray-100 flex-wrap z-50 arrow_box"
+                : "relative w-max h-fit bg-gray-100 flex-wrap z-50 invisible"
             }
           >
             <h1 className="md:text-xl text-md">{name}</h1>
@@ -132,7 +123,6 @@ export function MyApp({ Component, pageProps }) {
       <ProfileModal
         visible={profileModal ? "visible" : "invisible"}
         handleToggle={() => handleToggle()}
-        handleSignUp={() => handleSignUp()}
       ></ProfileModal>
     </>
   );
@@ -162,7 +152,10 @@ export function MyApp({ Component, pageProps }) {
             setID,
             modal,
             setModal,
-            handleSignUp,
+            profileModal,
+            setProfileModal,
+            handleToggle,
+            setSigned,
           }}
         >
           <div>

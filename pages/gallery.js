@@ -15,7 +15,6 @@ export default function Gallery() {
   function toggleModal(item) {
     setModal(modal == "visible" ? "invisible" : "visible");
     setModalItem(nfts[0][item]);
-    console.log("TOGGLE: ", modal == "invisible" ? "visible" : "invisible");
   }
 
   const { gql, useQuery, handleLogin, signed, modal, setModal } =
@@ -150,17 +149,11 @@ export default function Gallery() {
       </div>
     </div>
   );
-  console.log(
-    "MODAL: ",
-    modalItem,
-    "MODALITEM: ",
-    nfts[0] ? nfts[0][modalItem] : "no"
-  );
-  const addy = address;
+
   return (
     <>
       <title>Gallery</title>
-      <div className="flex w-full h-screen justify-center items-center">
+      <div className="flex w-full h-full min-h-screen justify-center items-center">
         {page}
       </div>
 

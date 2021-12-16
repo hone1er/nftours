@@ -2,7 +2,6 @@ import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import AppContext from "../AppContext";
 import { myLoader } from "../scripts/profileHelpers";
-import styles from "../styles/Home.module.css";
 
 function Modal(props) {
   console.log(props.item);
