@@ -62,73 +62,78 @@ export default function Discover() {
   };
 
   const NFTcards = locations
-  .sort((location1, location2) => getDistanceFromLatLonInKm(
-    location1.location[0],
-    location1.location[1],
-    latlng[0],
-    latlng[1]
-  ) - getDistanceFromLatLonInKm(
-    location2.location[0],
-    location2.location[1],
-    latlng[0],
-    latlng[1]
-  ))
-  .map((obj, idx) => {
-    const distance = getDistanceFromLatLonInKm(
-      obj.location[0],
-      obj.location[1],
-      latlng[0],
-      latlng[1]
-    );
-    if (distance < closetDist) {
-      setClosestCoord([obj.location[0], obj.location[1]]);
-      setClosestDist(distance);
-    }
-    console.log(obj);
-    return (
-      <div
-        key={idx}
-        className="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center"
-      >
-        <div className="mb-8">
-          <Image
-            className="object-center object-cover h-36 w-36"
-            loader={myLoader}
-            src={obj.image}
-            alt={obj.description}
-            width={500}
-            height={500}
-            placeholder="blurDataURL"
-          />
+    .sort(
+      (location1, location2) =>
+        getDistanceFromLatLonInKm(
+          location1.location[0],
+          location1.location[1],
+          latlng[0],
+          latlng[1]
+        ) -
+        getDistanceFromLatLonInKm(
+          location2.location[0],
+          location2.location[1],
+          latlng[0],
+          latlng[1]
+        )
+    )
+    .map((obj, idx) => {
+      const distance = getDistanceFromLatLonInKm(
+        obj.location[0],
+        obj.location[1],
+        latlng[0],
+        latlng[1]
+      );
+      if (distance < closetDist) {
+        setClosestCoord([obj.location[0], obj.location[1]]);
+        setClosestDist(distance);
+      }
+      return (
+        <div
+          key={idx}
+          className="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center"
+        >
+          <div className="mb-8">
+            <Image
+              className="object-center object-cover h-36 w-36"
+              loader={myLoader}
+              src={obj.image}
+              alt={obj.description}
+              width={500}
+              height={500}
+              placeholder="blurDataURL"
+            />
+          </div>
+          <div className="text-center">
+            <p className="text-xl text-white font-bold mb-2">{obj.name}</p>
+            <p className="text-base text-gray-300 font-normal">
+              {obj.description}
+            </p>
+            <p className="text-base text-gray-500 font-normal">
+              {latlng.length > 0
+                ? distance.toFixed(2) + " km"
+                : "check location"}
+            </p>
+          </div>
+          <br />
+          {distance < 1 ? (
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              onClick={() => handleMint(obj.tokenURI)}
+            >
+              Mint NFT
+            </button>
+          ) : (
+            <button
+              className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full"
+              disabled
+            >
+              Too Far
+            </button>
+          )}
         </div>
-        <div className="text-center">
-          <p className="text-xl text-white font-bold mb-2">{obj.name}</p>
-          <p className="text-base text-gray-300 font-normal">
-            {obj.description}
-          </p>
-          <p className="text-base text-gray-500 font-normal">
-            {latlng.length > 0 ? distance.toFixed(2) + " km" : "check location"}
-          </p>
-        </div>
-        <br />
-        {distance < 1 ? (
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            onClick={() => handleMint(obj.tokenURI)}
-          >
-            Mint NFT
-          </button>
-        ) : (
-          <button
-            className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full"
-            disabled
-          >
-            Too Far
-          </button>
-        )}
-      </div>
-    );
-  });
+      );
+    });
   let page = signed ? (
     <>
       <MapWithNoSSR />

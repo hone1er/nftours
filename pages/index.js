@@ -43,7 +43,6 @@ export default function Home() {
       router.push("/discover");
     }
   }, [signed]);
-  console.log(image);
   return (
     <>
       <title>Home</title>

@@ -10,7 +10,7 @@ function ProfileModal(props) {
   const [tempName, setTempName] = useState(name);
   const [tempImage, setTempImage] = useState(image);
   const [loading, setLoading] = useState(false);
-
+  console.log(tempImage);
   async function handleSignUp() {
     console.log("signing up");
     const updated = await updateProfile(tempName, tempImage);
