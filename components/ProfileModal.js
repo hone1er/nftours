@@ -1,6 +1,6 @@
 import { Spinner } from "@chakra-ui/react";
 import Image from "next/image";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AppContext from "../AppContext";
 import { myLoader, updateProfile } from "../scripts/profileHelpers";
 
@@ -11,6 +11,7 @@ function ProfileModal(props) {
   const [tempImage, setTempImage] = useState(image);
   const [loading, setLoading] = useState(false);
   console.log(tempImage);
+
   async function handleSignUp() {
     console.log("signing up");
     const updated = await updateProfile(tempName, tempImage);
@@ -27,6 +28,11 @@ function ProfileModal(props) {
     setLoading(false);
     handleToggle();
   }
+
+  useEffect(() => {
+    setTempName(name);
+    setTempImage(image);
+  }, [name, image]);
   return (
     <div x-data="{ show: true }" className={props.visible}>
       <div className="flex justify-center"></div>

@@ -10,16 +10,15 @@ import AppContext from "../AppContext";
 function Map(props) {
   const { latlng } = useContext(AppContext);
   console.log(latlng);
-  
-  const userMarker = latlng.length > 0 ?
-      <Marker position={[latlng[0], latlng[1]]}>
-        <Popup >
-          You are here
-        </Popup>
-      </Marker> : null
- 
-  const nftMarkers = NFTlinks.map((obj, idx) => {
 
+  const userMarker =
+    latlng.length > 0 ? (
+      <Marker position={[latlng[0], latlng[1]]}>
+        <Popup>You are here</Popup>
+      </Marker>
+    ) : null;
+
+  const nftMarkers = NFTlinks.map((obj, idx) => {
     return (
       <Marker key={idx} position={obj.location}>
         <Popup>
@@ -31,8 +30,9 @@ function Map(props) {
   });
   return (
     <MapContainer
+      className=""
       center={userMarker ? latlng : [38.0171441, -122.2885808]}
-      zoom={3}
+      zoom={5}
       scrollWheelZoom={false}
     >
       <TileLayer

@@ -58,23 +58,6 @@ export function MyApp({ Component, pageProps }) {
     setProfileModal(!profileModal);
   }
 
-  // check if user has IDX profile on load
-  useEffect(() => {
-    async function handleLogin() {
-      const data = await readProfile();
-      if (!data) {
-        alert("No account found \n Please create a new account");
-        return;
-      }
-      if (data.name) {
-        setName(data.name);
-        setID(data.name);
-      }
-      if (data.avatar) setImage(data.avatar);
-    }
-    handleLogin();
-  }, []);
-
   let img = image ? (
     <Image
       className="object-center object-cover rounded-full h-36 w-36"
