@@ -3,13 +3,12 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 import { NFTlinks } from "../scripts/NFTlinks";
-
 import React, { useContext, useState } from "react";
 import AppContext from "../AppContext";
+import { motion } from "framer-motion";
 
-function Map(props) {
+function Map() {
   const { latlng } = useContext(AppContext);
-  console.log(latlng);
 
   const userMarker =
     latlng.length > 0 ? (
@@ -18,16 +17,6 @@ function Map(props) {
       </Marker>
     ) : null;
 
-  const nftMarkers = NFTlinks.map((obj, idx) => {
-    return (
-      <Marker key={idx} position={obj.location}>
-        <Popup>
-          {obj.description}
-          <img src={obj.image} alt="" />
-        </Popup>
-      </Marker>
-    );
-  });
   return (
     <MapContainer
       className=""
@@ -39,8 +28,20 @@ function Map(props) {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {nftMarkers}
-      {userMarker ? userMarker : null}
+
+      {latlng.length > 0 && NFTlinks && (
+        <div className="block">
+          {NFTlinks?.map((obj, idx) => (
+            <Marker key={idx} position={obj.location}>
+              <Popup>
+                {obj.description}
+                <img src={obj.image} alt="" />
+              </Popup>
+            </Marker>
+          ))}
+          ;{userMarker ? userMarker : null}
+        </div>
+      )}
     </MapContainer>
   );
 }
