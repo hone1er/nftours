@@ -6,6 +6,7 @@ import { readProfile, updateProfile } from "../scripts/profileHelpers";
 import Image from "next/image";
 import { myLoader } from "../scripts/profileHelpers";
 import ProfileModal from "../components/ProfileModal";
+import { motion } from "framer-motion";
 export default function Home() {
   const {
     signed,
@@ -22,6 +23,42 @@ export default function Home() {
   } = useContext(AppContext);
 
   const [visible, setVisible] = useState("invisible");
+  const cards = ["discover", "mint", "collect"];
+  const nftours = ["N", "F", "T", "o", "u", "r", "s"];
+  const container = {
+    hidden: { rotateX: 90 },
+    show: {
+      rotateX: 0,
+      transition: {
+        staggerChildren: 0.5,
+      },
+    },
+  };
+
+  const card = {
+    hidden: { rotateX: 90 },
+    show: {
+      rotateX: 0,
+      transition: {
+        duration: 1,
+      },
+    },
+  };
+
+  const letterContainer = {
+    hidden: { rotateX: 90 },
+    show: {
+      rotateX: 0,
+      transition: {
+        staggerChildren: 0.125,
+      },
+    },
+  };
+
+  const letter = {
+    hidden: { rotateX: 90 },
+    show: { rotateX: 0 },
+  };
 
   function handleToggle() {
     setProfileModal(!profileModal);
@@ -60,30 +97,53 @@ export default function Home() {
       router.push("/discover");
     }
   }, [signed]);
+
   return (
     <>
       <title>Home</title>
       <div className={styles.container}>
         <div className={styles.main}>
-          <h1 className={styles.title}>NFTours</h1>
-          <br />
+          {nftours && (
+            <motion.h1
+              className={styles.title}
+              initial="hidden"
+              animate="show"
+              variants={letterContainer}
+            >
+              {nftours.map((lttr, i) => (
+                <motion.span key={i} className="inline-block" variants={letter}>
+                  {lttr}
+                </motion.span>
+              ))}
+            </motion.h1>
+          )}
 
-          <div className="flex flex-col">
+          <div className="flex flex-col h-48">
             {id && (
               <div className="welcome">
-                <h1 className="text-2xl">Welcome {id}!</h1>
+                <h1 className="text-2xl m-4">Welcome {id}!</h1>
               </div>
             )}
             {image && (
-              <Image
-                className="object-center pd-15 object-cover"
-                loader={myLoader}
-                src={image}
-                alt="user profile pic"
-                width={150}
-                height={150}
-                placeholder="blurDataURL"
-              ></Image>
+              <motion.div
+                className="relative z-0 m-auto"
+                initial={{ opacity: 0, y: 200 }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  transition: { dela: 0.75, duration: 1.25, ease: "easeOut" },
+                }}
+              >
+                <Image
+                  className="object-center pd-15 object-cover"
+                  loader={myLoader}
+                  src={image}
+                  alt="user profile pic"
+                  width={150}
+                  height={150}
+                  placeholder="blurDataURL"
+                />
+              </motion.div>
             )}
           </div>
 
@@ -91,14 +151,14 @@ export default function Home() {
           <br />
 
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            className="relative z-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
             onClick={handleLogin}
           >
             Login with wallet
           </button>
           <br />
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            className="relative z-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
             onClick={handleToggle}
           >
             {id == "" ? "Sign-up with wallet" : "Update profile"}
@@ -114,18 +174,20 @@ export default function Home() {
               handleSignUp={() => handleSignUp()}
             ></ProfileModal>
           </div>
-
-          <div className={styles.grid}>
-            <div className={styles.card}>
-              <h2>Discover</h2>
-            </div>
-            <div className={styles.card}>
-              <h2>Mint</h2>
-            </div>
-            <div className={styles.card}>
-              <h2>Collect</h2>
-            </div>
-          </div>
+          {cards && (
+            <motion.div
+              className={styles.grid}
+              initial="hidden"
+              animate="show"
+              variants={container}
+            >
+              {cards.map((cardText, i) => (
+                <motion.div key={i} className={styles.card} variants={card}>
+                  <h2>{cardText}</h2>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
         </div>
       </div>
     </>

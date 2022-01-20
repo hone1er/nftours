@@ -1,4 +1,8 @@
-# Demo [here](https://nftmvp.herokuapp.com/)
+## Demo [here](https://nftmvp.herokuapp.com/)
+
+### Smart contract deployed to Ropsten testnet
+
+#
 
 # Basic Sample Hardhat Project
 
