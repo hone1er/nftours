@@ -5,18 +5,15 @@ import "leaflet-defaulticon-compatibility";
 import { NFTlinks } from "../scripts/NFTlinks";
 import React, { useContext, useState } from "react";
 import AppContext from "../AppContext";
-import { motion } from "framer-motion";
 
 function Map() {
   const { latlng } = useContext(AppContext);
-
   const userMarker =
     latlng.length > 0 ? (
       <Marker position={[latlng[0], latlng[1]]}>
         <Popup>You are here</Popup>
       </Marker>
     ) : null;
-
   return (
     <MapContainer
       className=""
@@ -28,7 +25,6 @@ function Map() {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-
       {latlng.length > 0 && NFTlinks && (
         <div className="block">
           {NFTlinks?.map((obj, idx) => (
@@ -45,5 +41,4 @@ function Map() {
     </MapContainer>
   );
 }
-
 export default Map;
