@@ -25,22 +25,6 @@ export default function Home() {
   const [visible, setVisible] = useState("invisible");
   const cards = ["discover", "mint", "collect"];
   const nftours = ["N", "F", "T", "o", "u", "r", "s"];
-  const container = {
-    hidden: { rotateX: 90 },
-    show: {
-      rotateX: 0,
-      transition: {
-        staggerChildren: 0.5,
-      },
-    },
-  };
-
-  const card = {
-    hidden: { rotateX: 90 },
-    show: {
-      rotateX: 0,
-    },
-  };
 
   const letterContainer = {
     hidden: { rotateX: 0 },
@@ -104,7 +88,7 @@ export default function Home() {
       <title>Home</title>
       <div className="bg-gray-900">
         <div className={styles.container}>
-          <div className={styles.main}>
+          <div className={styles.main} id="page">
             {nftours && (
               <motion.h1
                 className={styles.title}
@@ -192,6 +176,7 @@ export default function Home() {
                 visible={profileModal ? "visible" : "invisible"}
                 handleToggle={() => handleToggle()}
                 handleSignUp={() => handleSignUp()}
+                profileModal={profileModal}
               ></ProfileModal>
             </div>
             {cards && (

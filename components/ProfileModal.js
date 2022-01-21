@@ -10,7 +10,6 @@ function ProfileModal(props) {
   const [tempName, setTempName] = useState(name);
   const [tempImage, setTempImage] = useState(image);
   const [loading, setLoading] = useState(false);
-  console.log(tempImage);
 
   async function handleSignUp() {
     console.log("signing up");
@@ -20,6 +19,7 @@ function ProfileModal(props) {
       setSigned(true);
     }
   }
+
   async function handleSave() {
     setLoading(true);
     await handleSignUp();
@@ -28,6 +28,18 @@ function ProfileModal(props) {
     setLoading(false);
     handleToggle();
   }
+
+  // When the user clicks anywhere outside of the modal, close it
+  useEffect(function onFirstMount() {
+    function onClick(e) {
+      let page = document.getElementById("page");
+      if (e.target == page && props.profileModal) {
+        handleToggle();
+      }
+    }
+
+    window.addEventListener("click", (e) => onClick(e));
+  });
 
   useEffect(() => {
     setTempName(name);
@@ -40,7 +52,11 @@ function ProfileModal(props) {
       <div
         x-show="show"
         tabIndex="0"
-        className="z-40 overflow-auto left-0 top-0 bottom-0 right-0 w-full h-full fixed"
+        className={
+          image
+            ? "z-40 overflow-auto left-0 top-0 bottom-0 right-0 w-min h-3/4  m-auto fixed"
+            : "z-40 overflow-auto left-0 top-0 bottom-0 right-0 w-min h-2/5  m-auto fixed"
+        }
       >
         <div
           className="z-50 relative p-3 mx-auto my-0 max-w-full"
@@ -113,7 +129,6 @@ function ProfileModal(props) {
             </div>
           </div>
         </div>
-        <div className="z-40 overflow-auto left-0 top-0 bottom-0 right-0 w-full h-full fixed bg-black opacity-50"></div>
       </div>
     </div>
   );

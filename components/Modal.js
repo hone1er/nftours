@@ -10,6 +10,18 @@ function Modal(props) {
   function toggleModal() {
     setModal(modal == "visible" ? "invisible" : "visible");
   }
+
+  // When the user clicks anywhere outside of the modal, close it
+  useEffect(function onFirstMount() {
+    function onClick(e) {
+      let page = document.getElementById("page");
+      if (e.target == page && props.profileModal) {
+        handleToggle();
+      }
+    }
+
+    window.addEventListener("click", (e) => onClick(e));
+  });
   return (
     <div x-data="{ show: true }" className={visibility}>
       <div className="flex justify-center"></div>

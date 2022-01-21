@@ -106,6 +106,7 @@ export function MyApp({ Component, pageProps }) {
       <ProfileModal
         visible={profileModal ? "visible" : "invisible"}
         handleToggle={() => handleToggle()}
+        profileModal={profileModal}
       ></ProfileModal>
     </>
   );
