@@ -125,15 +125,16 @@ export default function Home() {
             )}
 
             <div className="flex flex-col h-48">
-              {id && (
+              {id && image && (
                 <motion.div
                   className="welcome"
-                  initial={{ scale: 0, y: 200 }}
+                  initial={{ scale: 0, opacity: 0, y: 200 }}
                   animate={{
                     scale: 1,
+                    opacity: 1,
                     y: 0,
                     transition: {
-                      delay: 0.45,
+                      delay: 0.5,
                       duration: 2.15,
                       ease: "backInOut",
                     },
@@ -210,8 +211,21 @@ export default function Home() {
                     <motion.div
                       key={i}
                       className={styles.card}
-                      initial={{ x: start, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
+                      initial={{
+                        x: start,
+                        opacity: 0,
+                        boxShadow: "0px 0px 0px 0px rgba(74, 102, 161, 0.126)",
+                      }}
+                      animate={{
+                        x: 0,
+                        opacity: 1,
+                        boxShadow: "0px 0px 20px 20px rgba(74, 102, 161, 0.1)",
+                      }}
+                      whileHover={{
+                        boxShadow:
+                          "0px 0px 20px 22px rgba(74, 102, 161, 0.241)",
+                        transition: { ease: "easeInOut" },
+                      }}
                       transition={{ ease: "easeInOut", duration: 1 }}
                     >
                       <h2>{cardText}</h2>

@@ -87,13 +87,12 @@
   transition: color 0.15s ease, border-color 0.15s ease;
   max-width: 300px;
   min-width: 150px;
-  box-shadow: 0px 0px 20px 20px rgba(74, 102, 161, 0.226);
 }
 
 .card:hover,
 .card:focus,
 .card:active {
-  box-shadow: 0px 0px 20px 22px rgba(74, 102, 161, 0.26);
+  box-shadow: 0px 0px 20px 22px rgba(74, 102, 161, 0.281);
 }
 
 .card h2 {
