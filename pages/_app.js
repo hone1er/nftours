@@ -75,13 +75,13 @@ export function MyApp({ Component, pageProps }) {
           <p className="text-4xl font-bold">NFTours</p>
 
           {/* <Link href="/">
-          <a className="mr-4 text-purple-500">Home</a>
+          <a className="mr-4 text-pink-600">Home</a>
         </Link> */}
           <Link href="/discover">
-            <a className="mr-4 text-purple-500">Discover</a>
+            <a className="mr-4 text-pink-600">Discover</a>
           </Link>
           <Link href="/gallery">
-            <a className="mr-4 text-purple-500">My NFTs</a>
+            <a className="mr-4 text-pink-600 text-">My NFTs</a>
           </Link>
         </div>
         <div className="absolute top-8 right-0 ml-auto text-center account-wrap">

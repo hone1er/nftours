@@ -29,7 +29,7 @@
 }
 
 .title a {
-  color: #0070f3;
+  color: rgba(209, 213, 219);
   text-decoration: none;
 }
 
@@ -77,23 +77,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 1.5rem;
+  margin: 1.5rem 2.5rem;
   padding: 1.5rem;
   text-align: center;
-  color: inherit;
+  color: rgba(209, 213, 219);
   text-decoration: none;
-  border: 1px solid #eaeaea;
+  border: 1px solid #eaeaea28;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   max-width: 300px;
   min-width: 150px;
+  box-shadow: 0px 0px 20px 20px rgba(74, 102, 161, 0.226);
 }
 
 .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+  box-shadow: 0px 0px 20px 22px rgba(74, 102, 161, 0.26);
 }
 
 .card h2 {
@@ -116,5 +116,38 @@
   .grid {
     width: 100%;
     flex-direction: column;
+  }
+}
+
+.title {
+  font-size: 80px;
+  color: #fff;
+  text-align: center;
+  animation: title 1s ease-in-out infinite alternate;
+}
+@keyframes title {
+  from {
+    text-shadow: 0 0 0px #fff, 0 0 10px #fff, 0 0 10px #e60073ad,
+      0 0 20px #e60073ad, 0 0 30px #e60073ad, 0 0 40px #e60073ad,
+      0 0 50px #e60073ad;
+  }
+
+  to {
+    text-shadow: 0 0 0px #fff, 0 0 10px #ff4da6ad, 0 0 20px #ff4da6ad,
+      0 0 30px #ff4da6ad, 0 0 40px #ff4da6ad, 0 0 45px #ff4da6ad,
+      0 0 55px #ff4da6ad;
+  }
+}
+@-webkit-keyframes title {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 20px #e60073ad,
+      0 0 30px #e60073ad, 0 0 40px #e60073ad, 0 0 50px #e60073ad,
+      0 0 60px #e60073ad;
+  }
+
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6ad, 0 0 40px #ff4da6ad,
+      0 0 50px #ff4da6ad, 0 0 50px #ff4da6ad, 0 0 70px #ff4da6ad,
+      0 0 80px #ff4da6ad;
   }
 }

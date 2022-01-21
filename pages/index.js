@@ -39,25 +39,26 @@ export default function Home() {
     hidden: { rotateX: 90 },
     show: {
       rotateX: 0,
-      transition: {
-        duration: 1,
-      },
     },
   };
 
   const letterContainer = {
-    hidden: { rotateX: 90 },
+    hidden: { rotateX: 0 },
     show: {
       rotateX: 0,
       transition: {
-        staggerChildren: 0.125,
+        staggerChildren: 0.2,
+        ease: "easeOut",
       },
     },
   };
 
   const letter = {
     hidden: { rotateX: 90 },
-    show: { rotateX: 0 },
+    show: {
+      rotateX: 0,
+      transition: { duration: 1, ease: "easeOut" },
+    },
   };
 
   function handleToggle() {
@@ -101,94 +102,125 @@ export default function Home() {
   return (
     <>
       <title>Home</title>
-      <div className={styles.container}>
-        <div className={styles.main}>
-          {nftours && (
-            <motion.h1
-              className={styles.title}
-              initial="hidden"
-              animate="show"
-              variants={letterContainer}
-            >
-              {nftours.map((lttr, i) => (
-                <motion.span key={i} className="inline-block" variants={letter}>
-                  {lttr}
-                </motion.span>
-              ))}
-            </motion.h1>
-          )}
-
-          <div className="flex flex-col h-48">
-            {id && (
-              <div className="welcome">
-                <h1 className="text-2xl m-4">Welcome {id}!</h1>
-              </div>
+      <div className="bg-gray-900">
+        <div className={styles.container}>
+          <div className={styles.main}>
+            {nftours && (
+              <motion.h1
+                className={styles.title}
+                initial="hidden"
+                animate="show"
+                variants={letterContainer}
+              >
+                {nftours.map((lttr, i) => (
+                  <motion.span
+                    key={i}
+                    className="inline-block glow"
+                    variants={letter}
+                  >
+                    {lttr}
+                  </motion.span>
+                ))}
+              </motion.h1>
             )}
-            {image && (
+
+            <div className="flex flex-col h-48">
+              {id && (
+                <motion.div
+                  className="welcome"
+                  initial={{ scale: 0, y: 200 }}
+                  animate={{
+                    scale: 1,
+                    y: 0,
+                    transition: {
+                      delay: 0.45,
+                      duration: 2.15,
+                      ease: "backInOut",
+                    },
+                  }}
+                >
+                  <h1 className="text-gray-300 text-2xl m-4">Welcome {id}!</h1>
+                </motion.div>
+              )}
+              {image && (
+                <motion.div
+                  className="relative z-0 m-auto"
+                  initial={{ opacity: 0, scale: 0, y: 200 }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                    transition: { dela: 0.75, duration: 1.25, ease: "easeOut" },
+                  }}
+                >
+                  <Image
+                    className="object-center pd-15 object-cover"
+                    loader={myLoader}
+                    src={image}
+                    alt="user profile pic"
+                    width={150}
+                    height={150}
+                    placeholder="blurDataURL"
+                  />
+                </motion.div>
+              )}
+            </div>
+
+            <br />
+            <br />
+
+            <button
+              className="relative z-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              onClick={handleLogin}
+            >
+              Login with wallet
+            </button>
+            <br />
+            <button
+              className="relative z-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              onClick={handleToggle}
+            >
+              {id == "" ? "Sign-up with wallet" : "Update profile"}
+            </button>
+            <br />
+            <br />
+            <div x-data="{ show: true }" className={visible}>
+              <div className="flex justify-center"></div>
+
+              <ProfileModal
+                visible={profileModal ? "visible" : "invisible"}
+                handleToggle={() => handleToggle()}
+                handleSignUp={() => handleSignUp()}
+              ></ProfileModal>
+            </div>
+            {cards && (
               <motion.div
-                className="relative z-0 m-auto"
-                initial={{ opacity: 0, scale: 0, y: 200 }}
+                className={styles.grid}
+                initial={{ rotateX: 90, scale: 0.75 }}
                 animate={{
-                  opacity: 1,
+                  rotateX: 0,
                   scale: 1,
-                  y: 0,
-                  transition: { dela: 0.75, duration: 1.25, ease: "easeOut" },
+                  transition: { duration: 1.25, ease: "easeInOut" },
                 }}
               >
-                <Image
-                  className="object-center pd-15 object-cover"
-                  loader={myLoader}
-                  src={image}
-                  alt="user profile pic"
-                  width={150}
-                  height={150}
-                  placeholder="blurDataURL"
-                />
+                {cards.map((cardText, i) => {
+                  let start = i == 0 ? 200 : i == 2 ? -200 : 0;
+
+                  return (
+                    <motion.div
+                      key={i}
+                      className={styles.card}
+                      initial={{ x: start, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ ease: "easeInOut", duration: 1 }}
+                    >
+                      <h2>{cardText}</h2>
+                    </motion.div>
+                  );
+                })}
               </motion.div>
             )}
           </div>
-
-          <br />
-          <br />
-
-          <button
-            className="relative z-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            onClick={handleLogin}
-          >
-            Login with wallet
-          </button>
-          <br />
-          <button
-            className="relative z-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            onClick={handleToggle}
-          >
-            {id == "" ? "Sign-up with wallet" : "Update profile"}
-          </button>
-          <br />
-          <br />
-          <div x-data="{ show: true }" className={visible}>
-            <div className="flex justify-center"></div>
-
-            <ProfileModal
-              visible={profileModal ? "visible" : "invisible"}
-              handleToggle={() => handleToggle()}
-              handleSignUp={() => handleSignUp()}
-            ></ProfileModal>
-          </div>
-          {cards && (
-            <motion.div
-              className={styles.grid}
-              initial="hidden"
-              animate="show"
-              variants={container}
-            >
-              {cards.map((cardText, i) => (
-                <motion.div key={i} className={styles.card} variants={card}>
-                  <h2>{cardText}</h2>
-                </motion.div>
-              ))}
-            </motion.div>
-          )}
         </div>
       </div>
     </>

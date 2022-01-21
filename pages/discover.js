@@ -165,7 +165,7 @@ export default function Discover() {
         <div className="w-full bg-gray-800">
           <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-4 py-12">
             <div className="text-center pb-12">
-              <h2 className="text-base font-bold text-indigo-600">Discover</h2>
+              <h2 className="text-base font-bold text-pink-600">Discover</h2>
               <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-white">
                 Location Based NFTs
               </h1>
