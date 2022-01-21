@@ -78,16 +78,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 1.5rem 2.5rem;
+  margin: 2.5rem;
   padding: 1.5rem;
   text-align: center;
   color: rgba(209, 213, 219);
+  background-color: rgba(17, 24, 39);
   text-decoration: none;
-  border: 1px solid #eaeaea28;
-  border-radius: 10px;
+  border: 1px solid #eaeaea04;
+  border-radius: 50%;
   transition: color 0.15s ease, border-color 0.15s ease;
   max-width: 300px;
   min-width: 150px;
+  max-height: 300px;
+  min-height: 150px;
 }
 
 .card h2 {

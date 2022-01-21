@@ -155,7 +155,7 @@ export default function Home() {
             <br />
 
             <button
-              className="relative z-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              className="relative z-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-6"
               onClick={handleLogin}
             >
               Login with wallet
@@ -193,6 +193,7 @@ export default function Home() {
                   let rotation = i == 0 ? 90 : i == 2 ? -90 : 0;
                   let opacity = i == 0 ? 0 : i == 2 ? 0 : 1;
                   let delay = i == 0 ? 0.25 : i == 2 ? 0.25 : 0;
+                  let z = i == 0 ? -10 : i == 2 ? -10 : 10;
 
                   return (
                     <motion.div
@@ -200,26 +201,33 @@ export default function Home() {
                       className={styles.card}
                       initial={{
                         x: start,
+                        z: z,
                         scale: 0,
                         opacity: opacity,
                         rotateY: rotation,
-                        boxShadow: "0px 0px 0px 0px rgba(74, 102, 161, 0.126)",
+
+                        boxShadow: "0px 0px 0px 0px rgba(31, 45, 73, 0)",
                       }}
                       animate={{
                         x: 0,
                         scale: 1,
                         opacity: 1,
                         rotateY: 0,
-                        boxShadow: "0px 0px 20px 20px rgba(74, 102, 161, 0.1)",
+                        boxShadow: "0px 0px 25px 20px rgba(31, 45, 73, 0.1)",
                       }}
                       whileHover={{
-                        boxShadow:
-                          "0px 0px 20px 22px rgba(74, 102, 161, 0.241)",
+                        boxShadow: "0px 0px 25px 23px rgba(31, 45, 73, 0.25)",
+                        scale: 1.05,
+                        transition: { ease: "easeInOut" },
+                      }}
+                      whileTap={{
+                        boxShadow: "0px 0px 25px 23px rgba(31, 45, 73, 0.25)",
+                        scale: 1.05,
                         transition: { ease: "easeInOut" },
                       }}
                       transition={{
                         ease: "easeOut",
-                        duration: 1,
+                        duration: 1.25,
                         delay: delay,
                       }}
                     >
