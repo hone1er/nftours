@@ -89,12 +89,6 @@
   min-width: 150px;
 }
 
-.card:hover,
-.card:focus,
-.card:active {
-  box-shadow: 0px 0px 20px 22px rgba(74, 102, 161, 0.281);
-}
-
 .card h2 {
   margin: 0;
   font-size: 1.5rem;

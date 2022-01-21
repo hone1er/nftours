@@ -70,9 +70,9 @@ export function MyApp({ Component, pageProps }) {
   ) : null;
   let Nav = (
     <>
-      <nav className="border-b flex p-6">
+      <nav className="flex shadow-sm p-6 bg-gray-900">
         <div className="nav-wrap">
-          <p className="text-4xl font-bold">NFTours</p>
+          <p className="text-4xl font-bold text-white">NFTours</p>
 
           {/* <Link href="/">
           <a className="mr-4 text-pink-600">Home</a>

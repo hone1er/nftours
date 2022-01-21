@@ -197,15 +197,17 @@ export default function Home() {
             {cards && (
               <motion.div
                 className={styles.grid}
-                initial={{ rotateX: 90, scale: 0.75 }}
+                initial={{ scale: 0.75 }}
                 animate={{
-                  rotateX: 0,
                   scale: 1,
                   transition: { duration: 1.25, ease: "easeInOut" },
                 }}
               >
                 {cards.map((cardText, i) => {
-                  let start = i == 0 ? 200 : i == 2 ? -200 : 0;
+                  let start = i == 0 ? 275 : i == 2 ? -275 : 0;
+                  let rotation = i == 0 ? 90 : i == 2 ? -90 : 0;
+                  let opacity = i == 0 ? 0 : i == 2 ? 0 : 1;
+                  let delay = i == 0 ? 0.25 : i == 2 ? 0.25 : 0;
 
                   return (
                     <motion.div
@@ -213,12 +215,16 @@ export default function Home() {
                       className={styles.card}
                       initial={{
                         x: start,
-                        opacity: 0,
+                        scale: 0,
+                        opacity: opacity,
+                        rotateY: rotation,
                         boxShadow: "0px 0px 0px 0px rgba(74, 102, 161, 0.126)",
                       }}
                       animate={{
                         x: 0,
+                        scale: 1,
                         opacity: 1,
+                        rotateY: 0,
                         boxShadow: "0px 0px 20px 20px rgba(74, 102, 161, 0.1)",
                       }}
                       whileHover={{
@@ -226,7 +232,11 @@ export default function Home() {
                           "0px 0px 20px 22px rgba(74, 102, 161, 0.241)",
                         transition: { ease: "easeInOut" },
                       }}
-                      transition={{ ease: "easeInOut", duration: 1 }}
+                      transition={{
+                        ease: "easeOut",
+                        duration: 1,
+                        delay: delay,
+                      }}
                     >
                       <h2>{cardText}</h2>
                     </motion.div>
