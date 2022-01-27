@@ -54,8 +54,8 @@ function ProfileModal(props) {
         tabIndex="0"
         className={
           image
-            ? "z-40 overflow-auto left-0 top-0 bottom-0 right-0 w-min h-3/4  m-auto fixed"
-            : "z-40 overflow-auto left-0 top-0 bottom-0 right-0 w-min h-2/5  m-auto fixed"
+            ? "z-40 overflow-auto left-0 top-0 bottom-0 right-0 max-w-full w-min h-3/4  m-auto fixed"
+            : "z-40 overflow-auto left-0 top-0 bottom-0 right-0 max-w-full w-min h-2/5  m-auto fixed"
         }
       >
         <div
